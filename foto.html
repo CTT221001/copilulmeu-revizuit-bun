@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foto Povești — CopilulMeu.ro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5A623;
+      --sky: #4A90D9;
+      --cream: #FFF8F0;
+      --peach: #FFE8CC;
+      --deep-blue: #1A3A5C;
+      --text: #2C2C2C;
+      --muted: #7A7A7A;
+      --white: #ffffff;
+      --purple: #7B1FA2;
+      --light-purple: #F3E5F5;
+      --radius: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,248,240,0.97); backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(245,166,35,0.2);
+    }
+    .nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; border-bottom: 1px solid rgba(245,166,35,0.1);
+    }
+    .nav-bottom {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 32px; gap: 0; list-style: none;
+    }
+    .nav-bottom li a {
+      display: block; font-size: 0.8rem; font-weight: 500; color: var(--deep-blue);
+      text-decoration: none; padding: 10px 14px; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-bottom li a:hover { color: var(--sun); border-bottom-color: var(--sun); }
+    .nav-bottom li a.active { color: var(--purple); border-bottom-color: var(--purple); font-weight: 600; }
+    .nav-cta {
+      background: var(--sun) !important; color: var(--white) !important;
+      border-radius: 50px !important; padding: 8px 20px !important;
+      font-weight: 600 !important; border-bottom: none !important; margin-left: 8px;
+    }
+
+    /* HERO */
+    .page-hero {
+      min-height: 400px;
+      background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 60%, #AB47BC 100%);
+      display: flex; align-items: center;
+      padding: 160px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -60px;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero::after {
+      content: '📸';
+      position: absolute; bottom: 20px; right: 80px;
+      font-size: 9rem; opacity: 0.07;
+    }
+    .hero-inner { position: relative; z-index: 2; }
+    .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: #E1BEE7; }
+    .page-hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+    .page-hero h1 em { font-style: italic; font-weight: 300; color: #E1BEE7; }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.7); font-weight: 300; max-width: 520px; line-height: 1.7; }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 60px; }
+    .section-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 12px; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 2.8vw, 2.4rem); font-weight: 800; color: var(--deep-blue); letter-spacing: -1px; line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 48px; max-width: 580px; }
+    .section-divider { border: none; border-top: 1px solid rgba(26,58,92,0.08); margin: 80px 0; }
+
+    /* CONCURS BANNER */
+    .concurs-banner {
+      background: linear-gradient(135deg, #4A148C, #AB47BC);
+      border-radius: 24px; padding: 40px 48px;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 32px; margin-bottom: 80px;
+      position: relative; overflow: hidden;
+    }
+    .concurs-banner::before {
+      content: '🏆';
+      position: absolute; right: 180px; top: 50%;
+      transform: translateY(-50%); font-size: 5rem; opacity: 0.1;
+    }
+    .concurs-badge {
+      display: inline-block; background: rgba(255,255,255,0.2);
+      color: var(--white); font-size: 0.72rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 12px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .concurs-banner h3 { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 800; color: var(--white); margin-bottom: 8px; letter-spacing: -0.5px; }
+    .concurs-banner p { font-size: 0.9rem; color: rgba(255,255,255,0.75); font-weight: 300; line-height: 1.6; }
+    .btn-concurs { background: var(--white); color: var(--purple); padding: 14px 32px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; }
+    .btn-concurs:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+    /* FILTER TABS */
+    .filter-tabs { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 8px 20px; border-radius: 50px;
+      border: 2px solid rgba(26,58,92,0.12);
+      background: var(--white); color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .filter-btn:hover { border-color: var(--purple); color: var(--purple); }
+    .filter-btn.active { background: var(--purple); border-color: var(--purple); color: var(--white); }
+
+    /* PINTEREST MASONRY GRID */
+    .masonry-grid {
+      columns: 4;
+      column-gap: 16px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+      position: relative;
+    }
+    .masonry-item:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(123,31,162,0.15); }
+    .masonry-item:hover .photo-overlay { opacity: 1; }
+
+    .photo-area {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative;
+    }
+    .photo-area.tall { height: 260px; }
+    .photo-area.medium { height: 200px; }
+    .photo-area.short { height: 150px; }
+
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: rgba(74,20,140,0.5);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .overlay-icon { font-size: 2rem; }
+
+    .photo-info { padding: 14px 16px; }
+    .photo-author { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .author-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .author-text { font-size: 0.75rem; font-weight: 600; color: var(--deep-blue); }
+    .photo-caption { font-size: 0.82rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
+    .photo-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .photo-tag {
+      font-size: 0.68rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 50px; background: var(--light-purple); color: var(--purple);
+    }
+    .photo-likes { display: flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+
+    /* ALBUME TEMATICE */
+    .albums-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .album-card {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer; position: relative;
+    }
+    .album-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,58,92,0.12); }
+    .album-cover {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; position: relative;
+    }
+    .album-count {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(0,0,0,0.4); color: var(--white);
+      font-size: 0.7rem; font-weight: 700; padding: 4px 10px;
+      border-radius: 50px;
+    }
+    .album-info { padding: 16px; background: var(--white); }
+    .album-info h3 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--deep-blue); margin-bottom: 4px; font-weight: 600; }
+    .album-info p { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+    /* POVESTI ILUSTRATE */
+    .stories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .story-card {
+      background: var(--white); border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .story-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,58,92,0.1); }
+    .story-cover { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .story-body { padding: 22px; }
+    .story-tag { display: inline-block; background: var(--light-purple); color: var(--purple); font-size: 0.68rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .story-body h3 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--deep-blue); margin-bottom: 8px; line-height: 1.3; font-weight: 600; }
+    .story-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .story-author { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+    .story-author-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+    .story-author-name { font-size: 0.76rem; font-weight: 600; color: var(--deep-blue); }
+    .story-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 0.82rem; font-weight: 600; color: var(--purple); text-decoration: none; transition: gap 0.2s; }
+    .story-link:hover { gap: 10px; }
+
+    /* MOMENTE SPECIALE */
+    .moments-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .moment-card {
+      background: var(--white); border-radius: 18px; padding: 24px 28px;
+      display: flex; gap: 20px; align-items: center;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .moment-card:hover { transform: translateX(4px); box-shadow: 0 8px 24px rgba(26,58,92,0.08); }
+    .moment-emoji { font-size: 2.5rem; flex-shrink: 0; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; }
+    .moment-text h4 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--deep-blue); margin-bottom: 4px; font-weight: 600; }
+    .moment-text p { font-size: 0.82rem; color: var(--muted); line-height: 1.55; font-weight: 300; }
+    .moment-count { font-size: 0.72rem; color: var(--purple); font-weight: 700; margin-top: 6px; }
+
+    /* UPLOAD CTA */
+    .upload-box {
+      border: 2px dashed rgba(123,31,162,0.3); border-radius: 24px;
+      padding: 60px; text-align: center; margin-top: 48px;
+      background: var(--light-purple); transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .upload-box:hover { border-color: var(--purple); background: #EDE7F6; }
+    .upload-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
+    .upload-box h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--deep-blue); margin-bottom: 8px; font-weight: 700; }
+    .upload-box p { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; font-weight: 300; }
+    .btn-upload { display: inline-flex; align-items: center; gap: 8px; background: var(--purple); color: var(--white); padding: 12px 28px; border-radius: 50px; font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: transform 0.2s; }
+    .btn-upload:hover { transform: translateY(-2px); }
+
+    /* CTA */
+    .cta-banner {
+      background: linear-gradient(135deg, #4A148C, #AB47BC);
+      border-radius: 28px; padding: 60px;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 40px; margin-top: 80px;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner h2 { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.2; margin-bottom: 10px; }
+    .cta-banner h2 em { font-style: italic; color: #E1BEE7; font-weight: 300; }
+    .cta-banner p { color: rgba(255,255,255,0.65); font-size: 0.95rem; font-weight: 300; }
+    .btn-primary { background: var(--white); color: var(--purple); padding: 16px 36px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; white-space: nowrap; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.15); }
+
+    /* FOOTER */
+    footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 60px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1024px) {
+      .page-hero { padding: 140px 30px 60px; }
+      .main-wrap { padding: 60px 30px; }
+      .masonry-grid { columns: 2; }
+      .albums-grid { grid-template-columns: repeat(2, 1fr); }
+      .stories-grid { grid-template-columns: repeat(2, 1fr); }
+      .moments-grid { grid-template-columns: 1fr; }
+      .concurs-banner { grid-template-columns: 1fr; }
+      .cta-banner { grid-template-columns: 1fr; padding: 40px; }
+      footer { padding: 30px; }
+    }
+    @media (max-width: 640px) {
+      .masonry-grid { columns: 1; }
+      .albums-grid, .stories-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-top">
+      <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;">
+        <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+        <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+      </a>
+      <a href="forum.html" class="nav-cta" style="text-decoration:none;font-size:0.85rem;">Forum</a>
+    </div>
+    <ul class="nav-bottom">
+      <li><a href="index.html">Acasă</a></li>
+      <li><a href="prenatal.html">Perioada prenatală și nașterea</a></li>
+      <li><a href="crestere.html">Creșterea și educarea copilului</a></li>
+      <li><a href="intelepciune.html">Înțelepciunea mămicii</a></li>
+      <li><a href="retete.html">Rețete culinare</a></li>
+      <li><a href="jocuri.html">Jocuri online</a></li>
+      <li><a href="foto.html" class="active">Foto Povești</a></li>
+      <li><a href="teste.html">Teste și sondaje</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="index.html">Acasă</a> › Foto Povești</div>
+      <h1>Foto<br><em>Povești</em></h1>
+      <p>Fiecare fotografie ascunde o poveste. Împărtășește momentele prețioase ale copilăriei cu comunitatea noastră și păstrează amintirile pentru totdeauna.</p>
+    </div>
+  </section>
+
+  <div class="main-wrap">
+
+    <!-- CONCURS LUNAR -->
+    <div class="concurs-banner">
+      <div>
+        <span class="concurs-badge">🏆 Concurs foto — Martie 2026</span>
+        <h3>Tema lunii: „Primii pași"</h3>
+        <p>Trimite cea mai frumoasă fotografie cu momentul în care copilul tău a făcut primii pași. Câștigătoarea lunii primește un album foto premium tipărit!</p>
+      </div>
+      <a href="#upload" class="btn-concurs">Participă acum →</a>
+    </div>
+
+    <!-- GALERIE FOTO -->
+    <div class="section-label">Galerie comunitate</div>
+    <h2 class="section-title">Galerie foto</h2>
+    <p class="section-sub">Momente magice trimise de părinții din comunitatea noastră — bucurie, dragoste și copilărie pură.</p>
+
+    <div class="filter-tabs">
+      <button class="filter-btn active">Toate</button>
+      <button class="filter-btn">Nou-născuți</button>
+      <button class="filter-btn">Primii pași</button>
+      <button class="filter-btn">Grădiniță</button>
+      <button class="filter-btn">Familie</button>
+      <button class="filter-btn">Natură</button>
+      <button class="filter-btn">Sărbători</button>
+    </div>
+
+    <div class="masonry-grid">
+
+      <div class="masonry-item">
+        <div class="photo-area tall" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">
+          👶
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#FFD6E0;">👩</div>
+            <span class="author-text">Maria D.</span>
+          </div>
+          <p class="photo-caption">Prima zi acasă — cel mai fericit moment din viața noastră ❤️</p>
+          <div class="photo-tags"><span class="photo-tag">Nou-născut</span></div>
+          <div class="photo-likes">❤️ 142 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area short" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">
+          🌊
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#B8DEFF;">👩‍🦰</div>
+            <span class="author-text">Ioana M.</span>
+          </div>
+          <p class="photo-caption">Prima vacanță la mare — ochii lui când a văzut valurile! 🌊</p>
+          <div class="photo-tags"><span class="photo-tag">Vacanță</span></div>
+          <div class="photo-likes">❤️ 98 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area medium" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">
+          🌿
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#C8F5C8;">👩‍🦱</div>
+            <span class="author-text">Elena P.</span>
+          </div>
+          <p class="photo-caption">Exploratori în natură — curiozitatea lui nu are limite 🍃</p>
+          <div class="photo-tags"><span class="photo-tag">Natură</span></div>
+          <div class="photo-likes">❤️ 76 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area short" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">
+          ☀️
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#FFE5B4;">👩</div>
+            <span class="author-text">Ana R.</span>
+          </div>
+          <p class="photo-caption">Zâmbetul de dimineață care îmi luminează ziua ☀️</p>
+          <div class="photo-tags"><span class="photo-tag">Familie</span></div>
+          <div class="photo-likes">❤️ 211 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area tall" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">
+          🎨
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#E8D5FF;">👩‍🦳</div>
+            <span class="author-text">Mihaela T.</span>
+          </div>
+          <p class="photo-caption">Pictorii în devenire — și eu și pereții am rămas fără cuvinte 😂🎨</p>
+          <div class="photo-tags"><span class="photo-tag">Creativitate</span></div>
+          <div class="photo-likes">❤️ 189 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area medium" style="background: linear-gradient(135deg, #FCE4EC, #F8BBD9);">
+          🎂
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#FCE4EC;">👩</div>
+            <span class="author-text">Cristina B.</span>
+          </div>
+          <p class="photo-caption">Un an de viață — un an de iubire necondiționată 🎂🎉</p>
+          <div class="photo-tags"><span class="photo-tag">Aniversare</span></div>
+          <div class="photo-likes">❤️ 324 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area short" style="background: linear-gradient(135deg, #E3F2FD, #B8DEFF);">
+          ❄️
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#E3F2FD;">👩‍🦰</div>
+            <span class="author-text">Laura C.</span>
+          </div>
+          <p class="photo-caption">Prima zăpadă — uimirea din ochii lui nu o voi uita niciodată ❄️</p>
+          <div class="photo-tags"><span class="photo-tag">Iarnă</span></div>
+          <div class="photo-likes">❤️ 157 like-uri</div>
+        </div>
+      </div>
+
+      <div class="masonry-item">
+        <div class="photo-area tall" style="background: linear-gradient(135deg, #FFF9C4, #FFE082);">
+          🌻
+          <div class="photo-overlay"><span class="overlay-icon">🔍</span></div>
+        </div>
+        <div class="photo-info">
+          <div class="photo-author">
+            <div class="author-dot" style="background:#FFF9C4;">👩‍🦱</div>
+            <span class="author-text">Raluca N.</span>
+          </div>
+          <p class="photo-caption">Grădina bunicii — locul magic al copilăriei lui 🌻🌿</p>
+          <div class="photo-tags"><span class="photo-tag">Natură</span><span class="photo-tag">Familie</span></div>
+          <div class="photo-likes">❤️ 203 like-uri</div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- ALBUME TEMATICE -->
+    <div class="section-label">Albume</div>
+    <h2 class="section-title">Albume tematice</h2>
+    <p class="section-sub">Colecții curate de fotografii organizate după momentele cele mai importante din viața copilului.</p>
+
+    <div class="albums-grid">
+      <div class="album-card">
+        <div class="album-cover" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">
+          👶
+          <span class="album-count">📷 248 foto</span>
+        </div>
+        <div class="album-info">
+          <h3>Primul an de viață</h3>
+          <p>De la primele zile până la primul tort cu lumânare</p>
+        </div>
+      </div>
+      <div class="album-card">
+        <div class="album-cover" style="background: linear-gradient(135deg, #E3F2FD, #B8DEFF);">
+          ❄️
+          <span class="album-count">📷 186 foto</span>
+        </div>
+        <div class="album-info">
+          <h3>Crăciun în familie</h3>
+          <p>Magia sărbătorilor văzută prin ochii copiilor</p>
+        </div>
+      </div>
+      <div class="album-card">
+        <div class="album-cover" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">
+          🌿
+          <span class="album-count">📷 312 foto</span>
+        </div>
+        <div class="album-info">
+          <h3>Copii în natură</h3>
+          <p>Exploratori mici în lumea mare și verde</p>
+        </div>
+      </div>
+      <div class="album-card">
+        <div class="album-cover" style="background: linear-gradient(135deg, #FFF9C4, #FFE082);">
+          🎒
+          <span class="album-count">📷 94 foto</span>
+        </div>
+        <div class="album-info">
+          <h3>Prima zi de grădiniță</h3>
+          <p>Emoție, lacrimi și zâmbete — pentru toți</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- POVESTI ILUSTRATE -->
+    <div class="section-label">Povești</div>
+    <h2 class="section-title">Povești ilustrate cu fotografii</h2>
+    <p class="section-sub">Mai mult decât o fotografie — povești spuse în imagini de părinți din comunitatea noastră.</p>
+
+    <div class="stories-grid">
+      <div class="story-card">
+        <div class="story-cover" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🤱</div>
+        <div class="story-body">
+          <span class="story-tag">Naștere</span>
+          <h3>De la sala de naștere la prima îmbrățișare</h3>
+          <p>O poveste în 12 fotografii despre cel mai intens, mai frumos și mai copleșitor moment din viața noastră.</p>
+          <div class="story-author">
+            <div class="story-author-dot" style="background:#FFD6E0;">👩</div>
+            <span class="story-author-name">Maria D. — București</span>
+          </div>
+          <a href="#" class="story-link">Vezi povestea →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-cover" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">👣</div>
+        <div class="story-body">
+          <span class="story-tag">Primii pași</span>
+          <h3>Ziua în care lumea noastră s-a schimbat pentru totdeauna</h3>
+          <p>Patru pași mici, un moment uriaș — povestea în fotografii a primilor pași ai lui Andrei.</p>
+          <div class="story-author">
+            <div class="story-author-dot" style="background:#B8DEFF;">👩‍🦰</div>
+            <span class="story-author-name">Ioana M. — Cluj</span>
+          </div>
+          <a href="#" class="story-link">Vezi povestea →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-cover" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">🌻</div>
+        <div class="story-body">
+          <span class="story-tag">Anotimpuri</span>
+          <h3>Un an întreg în fotografii — toate anotimpurile copilăriei</h3>
+          <p>De la primii fulgi de zăpadă până la primul înghecat de vară — un an din viața Sofiei în 52 de fotografii.</p>
+          <div class="story-author">
+            <div class="story-author-dot" style="background:#C8F5C8;">👩‍🦱</div>
+            <span class="story-author-name">Elena P. — Timișoara</span>
+          </div>
+          <a href="#" class="story-link">Vezi povestea →</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- MOMENTE SPECIALE -->
+    <div class="section-label">Comunitate</div>
+    <h2 class="section-title">Momente speciale ale comunității</h2>
+    <p class="section-sub">Cele mai îndrăgite momente și categorii din galeria comunității CopilulMeu.ro.</p>
+
+    <div class="moments-grid">
+      <div class="moment-card">
+        <div class="moment-emoji" style="background:#FFD6E0;">👶</div>
+        <div class="moment-text">
+          <h4>Prima fotografie acasă</h4>
+          <p>Momentul în care bebelușul ajunge acasă pentru prima dată — ochii larg deschiși, lumea nouă.</p>
+          <div class="moment-count">📷 1.240 fotografii în comunitate</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <div class="moment-emoji" style="background:#FFF9C4;">😁</div>
+        <div class="moment-text">
+          <h4>Primul zâmbet real</h4>
+          <p>Nu cel reflexiv — ci primul zâmbet adevărat, îndreptat direct spre tine. Irezistibil de fotografiat.</p>
+          <div class="moment-count">📷 876 fotografii în comunitate</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <div class="moment-emoji" style="background:#C8F5C8;">🚶</div>
+        <div class="moment-text">
+          <h4>Primii pași</h4>
+          <p>Categoria cea mai populară — fiecare pas nesigur surprins de camera unui părinte îngrijorat și mândru.</p>
+          <div class="moment-count">📷 2.108 fotografii în comunitate</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <div class="moment-emoji" style="background:#E8D5FF;">🎂</div>
+        <div class="moment-text">
+          <h4>Primul tort — prima lumânare</h4>
+          <p>Crema pe față, bucuria în ochi — prima aniversare este mereu un eveniment fotografic major.</p>
+          <div class="moment-count">📷 1.567 fotografii în comunitate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="upload-box" id="upload">
+      <span class="upload-icon">📸</span>
+      <h3>Adaugă fotografia ta</h3>
+      <p>Împărtășește un moment special cu comunitatea CopilulMeu.ro. Fiecare fotografie spune o poveste unică.</p>
+      <a href="#" class="btn-upload">📎 Încarcă fotografia</a>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <div>
+        <h2>Fiecare moment<br><em>merită să fie păstrat</em></h2>
+        <p>Alătură-te comunității și împărtășește cele mai frumoase momente din viața copilului tău.</p>
+      </div>
+      <a href="forum.html" class="btn-primary">Intră în comunitate →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <span>© 2026 CopilulMeu.ro — Toate drepturile rezervate</span>
+      <span>Făcut cu ❤️ pentru părinții din România</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

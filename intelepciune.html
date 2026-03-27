@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Înțelepciunea Mămicii — CopilulMeu.ro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5A623;
+      --sky: #4A90D9;
+      --cream: #FFF8F0;
+      --peach: #FFE8CC;
+      --deep-blue: #1A3A5C;
+      --text: #2C2C2C;
+      --muted: #7A7A7A;
+      --white: #ffffff;
+      --rose: #E91E8C;
+      --light-rose: #FCE4EC;
+      --radius: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,248,240,0.97); backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(245,166,35,0.2);
+    }
+    .nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; border-bottom: 1px solid rgba(245,166,35,0.1);
+    }
+    .nav-bottom {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 32px; gap: 0; list-style: none;
+    }
+    .nav-bottom li a {
+      display: block; font-size: 0.8rem; font-weight: 500; color: var(--deep-blue);
+      text-decoration: none; padding: 10px 14px; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-bottom li a:hover { color: var(--sun); border-bottom-color: var(--sun); }
+    .nav-bottom li a.active { color: var(--rose); border-bottom-color: var(--rose); font-weight: 600; }
+    .nav-cta {
+      background: var(--sun) !important; color: var(--white) !important;
+      border-radius: 50px !important; padding: 8px 20px !important;
+      font-weight: 600 !important; border-bottom: none !important; margin-left: 8px;
+    }
+
+    /* HERO */
+    .page-hero {
+      min-height: 420px;
+      background: linear-gradient(135deg, #6A1040 0%, #C2185B 60%, #E91E8C 100%);
+      display: flex; align-items: center;
+      padding: 160px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -100px; right: -60px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero::after {
+      content: '❤️';
+      position: absolute; bottom: 30px; right: 80px;
+      font-size: 8rem; opacity: 0.07;
+    }
+    .hero-inner { position: relative; z-index: 2; }
+    .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--sun); }
+    .page-hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+    .page-hero h1 em { font-style: italic; font-weight: 300; color: #FFD6E0; }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.7); font-weight: 300; max-width: 520px; line-height: 1.7; }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 60px; }
+    .section-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--rose); margin-bottom: 12px; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 2.8vw, 2.4rem); font-weight: 800; color: var(--deep-blue); letter-spacing: -1px; line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 48px; max-width: 580px; }
+    .section-divider { border: none; border-top: 1px solid rgba(26,58,92,0.08); margin: 80px 0; }
+
+    /* SFATURI DIN EXPERIENTA */
+    .tips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .tip-card {
+      background: var(--white); border-radius: 20px; padding: 32px 28px;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .tip-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--rose), var(--sun));
+    }
+    .tip-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(233,30,140,0.1); }
+    .tip-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+    .tip-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--deep-blue); margin-bottom: 10px; font-weight: 600; }
+    .tip-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    /* CITATE */
+    .quotes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .quote-card {
+      background: linear-gradient(135deg, #FCE4EC, #F8BBD9);
+      border-radius: 20px; padding: 36px 32px;
+      position: relative; transition: transform 0.25s;
+    }
+    .quote-card:hover { transform: translateY(-4px); }
+    .quote-mark {
+      font-family: 'Fraunces', serif; font-size: 5rem; color: rgba(233,30,140,0.15);
+      position: absolute; top: 10px; left: 24px; line-height: 1;
+    }
+    .quote-text {
+      font-family: 'Fraunces', serif; font-size: 1.15rem; font-style: italic;
+      color: var(--deep-blue); line-height: 1.6; margin-bottom: 16px;
+      padding-top: 20px; font-weight: 300;
+    }
+    .quote-author { font-size: 0.82rem; font-weight: 600; color: var(--rose); letter-spacing: 0.5px; }
+
+    /* ARTICOLE MAMICI */
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .article-card {
+      background: var(--white); border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .article-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,58,92,0.1); }
+    .article-thumb { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; }
+    .article-meta { display: flex; align-items: center; gap: 8px; padding: 16px 20px 0; }
+    .author-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .author-name { font-size: 0.78rem; font-weight: 600; color: var(--deep-blue); }
+    .author-date { font-size: 0.72rem; color: var(--muted); }
+    .article-body { padding: 12px 20px 20px; }
+    .article-cat { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--rose); margin-bottom: 6px; }
+    .article-body h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--deep-blue); margin-bottom: 8px; line-height: 1.35; font-weight: 600; }
+    .article-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .article-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--rose); text-decoration: none; transition: gap 0.2s; }
+    .article-link:hover { gap: 10px; }
+
+    /* POVESTI */
+    .stories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .story-card {
+      background: var(--white); border-radius: 24px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .story-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,58,92,0.1); }
+    .story-image {
+      width: 100%; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .story-body { padding: 24px 28px 28px; display: flex; flex-direction: column; align-items: center; }
+    .story-tag { display: inline-block; background: var(--light-rose); color: var(--rose); font-size: 0.68rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .story-body h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--deep-blue); margin-bottom: 8px; line-height: 1.3; font-weight: 600; }
+    .story-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+    .story-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--rose); text-decoration: none; transition: gap 0.2s; }
+    .story-link:hover { gap: 10px; }
+
+    /* SFATURI PRACTICE */
+    .practical-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .practical-card {
+      background: var(--white); border-radius: 18px; padding: 28px;
+      display: flex; gap: 20px; align-items: flex-start;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .practical-card:hover { transform: translateX(4px); box-shadow: 0 8px 24px rgba(26,58,92,0.08); }
+    .practical-number {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), #F06292);
+      color: var(--white); font-family: 'Fraunces', serif;
+      font-size: 1.1rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .practical-content h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--deep-blue); margin-bottom: 8px; font-weight: 600; }
+    .practical-content p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+    /* CTA */
+    .cta-banner {
+      background: linear-gradient(135deg, #6A1040, #C2185B);
+      border-radius: 28px; padding: 60px;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 40px; margin-top: 80px;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::after { content: '💝'; position: absolute; right: 200px; top: 50%; transform: translateY(-50%); font-size: 6rem; opacity: 0.08; }
+    .cta-banner h2 { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.2; margin-bottom: 10px; }
+    .cta-banner h2 em { font-style: italic; color: #FFD6E0; font-weight: 300; }
+    .cta-banner p { color: rgba(255,255,255,0.65); font-size: 0.95rem; font-weight: 300; }
+    .btn-primary { background: var(--white); color: var(--rose); padding: 16px 36px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; white-space: nowrap; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.2); }
+
+    /* FOOTER */
+    footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 60px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1024px) {
+      .page-hero { padding: 140px 30px 60px; }
+      .main-wrap { padding: 60px 30px; }
+      .tips-grid, .articles-grid { grid-template-columns: repeat(2, 1fr); }
+      .quotes-grid, .stories-grid, .practical-grid { grid-template-columns: 1fr; }
+      .story-card { grid-template-columns: 100px 1fr; }
+      .cta-banner { grid-template-columns: 1fr; padding: 40px; }
+      footer { padding: 30px; }
+    }
+    @media (max-width: 640px) {
+      .tips-grid, .articles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-top">
+      <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;">
+        <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+        <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+      </a>
+      <a href="forum.html" class="nav-cta" style="text-decoration:none;font-size:0.85rem;">Forum</a>
+    </div>
+    <ul class="nav-bottom">
+      <li><a href="index.html">Acasă</a></li>
+      <li><a href="prenatal.html">Perioada prenatală și nașterea</a></li>
+      <li><a href="crestere.html">Creșterea și educarea copilului</a></li>
+      <li><a href="intelepciune.html" class="active">Înțelepciunea mămicii</a></li>
+      <li><a href="retete.html">Rețete culinare</a></li>
+      <li><a href="jocuri.html">Jocuri online</a></li>
+      <li><a href="foto.html">Foto Povești</a></li>
+      <li><a href="teste.html">Teste și sondaje</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="index.html">Acasă</a> › Înțelepciunea mămicii</div>
+      <h1>Înțelepciunea<br><em>mămicii</em></h1>
+      <p>Sfaturi din suflet, povești adevărate și vorbe înțelepte de la mame care au trecut prin tot ce treci și tu. Pentru că nicio mamă nu ar trebui să se simtă singură.</p>
+    </div>
+  </section>
+
+  <div class="main-wrap">
+
+    <!-- SFATURI DIN EXPERIENTA -->
+    <div class="section-label">Din inimă</div>
+    <h2 class="section-title">Sfaturi din experiență personală</h2>
+    <p class="section-sub">Lucruri pe care le-am învățat pe viu — mici înțelepciuni pe care nicio carte nu ți le poate spune.</p>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <span class="tip-icon">🌙</span>
+        <h3>Nopțile fără somn trec</h3>
+        <p>Când ești la al treilea schimb de scutec pe noapte și plângi alături de bebeluș — știi că trece. Nu durează veșnic, chiar dacă pare așa. Fiecare noapte dificilă te face mai puternică decât crezi că ești.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">💆‍♀️</span>
+        <h3>Ai grijă întâi de tine</h3>
+        <p>Dintr-un pahar gol nu poți turna pentru nimeni. Să îți iei 20 de minute pentru tine nu înseamnă că ești o mamă rea — înseamnă că ești o mamă înțeleaptă. Odihnită și echilibrată, ești o mamă mai bună.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🤲</span>
+        <h3>Cere ajutor fără rușine</h3>
+        <p>„Îmi merge bine" este cel mai mare mit din maternitate. Cere ajutor partenerului, familiei, prietenilor. A accepta sprijinul nu este o slăbiciune — este cel mai inteligent lucru pe care îl poți face.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">📵</span>
+        <h3>Pune jos telefonul</h3>
+        <p>Compararea cu alte mame de pe social media este cel mai rapid drum spre anxietate. Fiecare copil este unic, fiecare familie este diferită. Tu ești suficient de bună — exact așa cum ești.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🎯</span>
+        <h3>Fii prezentă, nu perfectă</h3>
+        <p>Copiii nu au nevoie de o mamă perfectă. Au nevoie de o mamă prezentă, caldă și autentică. Greșelile sunt parte din poveste — și din ale tale, și din ale lor.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🌈</span>
+        <h3>Bucuriile mici contează cel mai mult</h3>
+        <p>Prima îmbrățișare dimineața, râsul spontan la masa de prânz, „te iubesc, mami" înainte de somn. Acestea sunt momentele care rămân cu tine pentru totdeauna. Nu le rata uitându-te în altă parte.</p>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- CITATE -->
+    <div class="section-label">Vorbe înțelepte</div>
+    <h2 class="section-title">Citate și vorbe înțelepte</h2>
+    <p class="section-sub">Gânduri care reconfortează, inspiră și amintesc că maternitatea este cea mai frumoasă aventură.</p>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">A fi mamă înseamnă să ai inima ta umblând în afara corpului tău pentru tot restul vieții.</p>
+        <span class="quote-author">— Vorbă din popor</span>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Nu există o maternitate perfectă, ci doar mame care iubesc din toată inima și fac tot ce pot.</p>
+        <span class="quote-author">— Comunitatea CopilulMeu</span>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Copiii nu au nevoie de jucării scumpe. Au nevoie de timp, atenție și prezența ta neîmpărțită.</p>
+        <span class="quote-author">— Mama Adriana, comunitatea noastră</span>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Cea mai importantă lecție pe care o poți da copilului tău este să îl lași să te vadă iubind și respectând pe ceilalți.</p>
+        <span class="quote-author">— Vorbă veche românească</span>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- ARTICOLE SCRISE DE MAMICI -->
+    <div class="section-label">Vocea mămicilor</div>
+    <h2 class="section-title">Articole scrise de mămici</h2>
+    <p class="section-sub">Povești și sfaturi scrise de mame reale din comunitatea noastră — pentru că nimeni nu înțelege mai bine decât o altă mamă.</p>
+    <div class="articles-grid">
+      <div class="article-card">
+        <div class="article-thumb" style="background: linear-gradient(135deg, #FCE4EC, #F8BBD9);">✍️</div>
+        <div class="article-meta">
+          <div class="author-avatar" style="background:#FFD6E0;">👩</div>
+          <div>
+            <div class="author-name">Maria D., mamă de 2 ani</div>
+            <div class="author-date">15 martie 2026</div>
+          </div>
+        </div>
+        <div class="article-body">
+          <div class="article-cat">Experiență personală</div>
+          <h3>Cum am supraviețuit primelor 3 luni ca mamă</h3>
+          <p>Nimeni nu mi-a spus că voi plânge mai mult decât bebelușul meu în primele săptămâni. Dar nimeni nu mi-a spus nici cât de mult voi iubi.</p>
+          <a href="#" class="article-link">Citește povestea →</a>
+        </div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">💌</div>
+        <div class="article-meta">
+          <div class="author-avatar" style="background:#E8D5FF;">👩‍🦱</div>
+          <div>
+            <div class="author-name">Elena P., mamă de 5 ani</div>
+            <div class="author-date">8 martie 2026</div>
+          </div>
+        </div>
+        <div class="article-body">
+          <div class="article-cat">Sfaturi</div>
+          <h3>10 lucruri pe care le-aș face diferit la al doilea copil</h3>
+          <p>Cu primul copil am citit toate cărțile. Cu al doilea am înțeles că cel mai bun ghid ești chiar tu — dacă înveți să te asculți.</p>
+          <a href="#" class="article-link">Citește articolul →</a>
+        </div>
+      </div>
+      <div class="article-card">
+        <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🌊</div>
+        <div class="article-meta">
+          <div class="author-avatar" style="background:#B8DEFF;">👩‍🦰</div>
+          <div>
+            <div class="author-name">Ioana M., mamă de 3 ani</div>
+            <div class="author-date">1 martie 2026</div>
+          </div>
+        </div>
+        <div class="article-body">
+          <div class="article-cat">Sănătate mintală</div>
+          <h3>Baby blues — ce am simțit și cum am ieșit din el</h3>
+          <p>Mulți ani m-am rușinat să vorbesc despre asta. Acum știu că nu eram singură și că a cere ajutor a fost cel mai curajos lucru pe care l-am făcut.</p>
+          <a href="#" class="article-link">Citește articolul →</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- POVESTI EMOTIONANTE -->
+    <div class="section-label">Din suflet</div>
+    <h2 class="section-title">Povești emoționante</h2>
+    <p class="section-sub">Momente care ți-au schimbat viața, lecții învățate prin lacrimi și zâmbete, povești care îți amintesc de ce merită tot efortul.</p>
+    <div class="stories-grid">
+      <div class="story-card">
+        <div class="story-image" style="background: linear-gradient(135deg, #FCE4EC, #FFD6E0);">🤱</div>
+        <div class="story-body">
+          <span class="story-tag">Naștere</span>
+          <h3>Prima oară când l-am ținut în brațe</h3>
+          <p>Îmi aduc aminte fiecare secundă. Mirosul, căldura, greutatea minusculă în palme. Lumea s-a oprit în loc și eu am înțeles pentru prima dată ce înseamnă iubirea necondiționată.</p>
+          <a href="#" class="story-link">Citește povestea →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image" style="background: linear-gradient(135deg, #C8F5C8, #B2DFDB);">👣</div>
+        <div class="story-body">
+          <span class="story-tag">Primii pași</span>
+          <h3>Ziua în care a mers singur — și eu am plâns de bucurie</h3>
+          <p>A căzut de trei ori înainte să reușească. A patra oară a traversat toată camera, s-a uitat la mine și a zâmbit. Nu am mai putut să mă abțin.</p>
+          <a href="#" class="story-link">Citește povestea →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image" style="background: linear-gradient(135deg, #FFE5B4, #FFCC80);">🏥</div>
+        <div class="story-body">
+          <span class="story-tag">Provocare</span>
+          <h3>Trei zile la spital — cum am găsit puterea să fiu tare</h3>
+          <p>Când copilul tău e bolnav și speriat, nu ai luxul să cedezi. Dar când a adormit în sfârșit liniștit, am ieșit pe hol și am plâns cât am putut.</p>
+          <a href="#" class="story-link">Citește povestea →</a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image" style="background: linear-gradient(135deg, #E8D5FF, #CE93D8);">🎒</div>
+        <div class="story-body">
+          <span class="story-tag">Grădiniță</span>
+          <h3>Prima zi de grădiniță — pentru mine a fost mai greu</h3>
+          <p>Ea a intrat în clasă fără să se uite înapoi. Eu am stat în parcare jumătate de oră incapabilă să plec. Nimeni nu îmi spusese că desprinderea doare mai tare pentru mamă.</p>
+          <a href="#" class="story-link">Citește povestea →</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- SFATURI PRACTICE -->
+    <div class="section-label">Zi de zi</div>
+    <h2 class="section-title">Sfaturi practice pentru viața de zi cu zi</h2>
+    <p class="section-sub">Trucuri simple și eficiente care fac diferența în haosul frumos al vieții de mamă.</p>
+    <div class="practical-grid">
+      <div class="practical-card">
+        <div class="practical-number">1</div>
+        <div class="practical-content">
+          <h3>Pregătește seara pentru dimineața</h3>
+          <p>Hainele puse pe scaun, ghiozdanul făcut, micul dejun planificat — 10 minute seara economisesc 30 de minute de haos dimineața. Dimineții îi lipsește mereu timpul, nu bunele intenții.</p>
+        </div>
+      </div>
+      <div class="practical-card">
+        <div class="practical-number">2</div>
+        <div class="practical-content">
+          <h3>Rutinele sunt cel mai bun prieten al mamei</h3>
+          <p>Ora de masă, ora de baie, ora de poveste — copiii care știu ce urmează sunt mai calmi și mai cooperanți. Rutina nu înseamnă rigiditate, ci predictibilitate și siguranță.</p>
+        </div>
+      </div>
+      <div class="practical-card">
+        <div class="practical-number">3</div>
+        <div class="practical-content">
+          <h3>Implică copilul în treburile casei</h3>
+          <p>Un copil de 2 ani poate strânge jucăriile. Unul de 4 ani poate pune masa. Unul de 6 ani poate ajuta la spălat. Responsabilizarea timpurie construiește autonomie și stimă de sine.</p>
+        </div>
+      </div>
+      <div class="practical-card">
+        <div class="practical-number">4</div>
+        <div class="practical-content">
+          <h3>Creează un colț al liniștii</h3>
+          <p>Un loc special în casă — o pernă, o pătură, cărțile preferate — unde copilul poate merge când este copleșit. Îl înveți astfel să se autoregleze în loc să explodeze.</p>
+        </div>
+      </div>
+      <div class="practical-card">
+        <div class="practical-number">5</div>
+        <div class="practical-content">
+          <h3>Fotografiază momentele mici</h3>
+          <p>Nu doar zilele de naștere și Crăciunul. Fotografiază-l mâncând, jucându-se, dormind. Peste 10 ani, acele imagini banale vor fi cele mai prețioase amintiri.</p>
+        </div>
+      </div>
+      <div class="practical-card">
+        <div class="practical-number">6</div>
+        <div class="practical-content">
+          <h3>Scrie un jurnal de mamă</h3>
+          <p>Notează primele cuvinte, primele glume, momentele amuzante. Memoria este imperfectă, dar un jurnal ține vie magia copilăriei pentru totdeauna — și pentru tine, și pentru el.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <div>
+        <h2>Împărtășește și tu<br><em>înțelepciunea ta</em></h2>
+        <p>Scrie în forum, inspiră alte mame și fii parte dintr-o comunitate care te înțelege cu adevărat.</p>
+      </div>
+      <a href="forum.html" class="btn-primary">Intră în comunitate →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <span>© 2026 CopilulMeu.ro — Toate drepturile rezervate</span>
+      <span>Făcut cu ❤️ pentru părinții din România</span>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CopilulMeu.ro – Totul pentru copilul tău</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5A623;
+      --sky: #4A90D9;
+      --cream: #FFF8F0;
+      --peach: #FFE8CC;
+      --deep-blue: #1A3A5C;
+      --text: #2C2C2C;
+      --muted: #7A7A7A;
+      --white: #ffffff;
+      --radius: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,248,240,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(245,166,35,0.2);
+    }
+
+    .nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 32px;
+      border-bottom: 1px solid rgba(245,166,35,0.1);
+    }
+
+    .nav-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 32px;
+      gap: 0;
+      list-style: none;
+    }
+
+    .nav-bottom li a {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--deep-blue);
+      text-decoration: none;
+      padding: 10px 14px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .nav-bottom li a:hover {
+      color: var(--sun);
+      border-bottom-color: var(--sun);
+      background: rgba(245,166,35,0.05);
+    }
+
+    .nav-bottom li a.active {
+      color: var(--sun);
+      border-bottom-color: var(--sun);
+      font-weight: 600;
+    }
+
+    .nav-cta {
+      background: var(--sun) !important;
+      color: var(--white) !important;
+      border-radius: 50px !important;
+      padding: 8px 20px !important;
+      font-weight: 600 !important;
+      border-bottom: none !important;
+      margin-left: 8px;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245,166,35,0.4);
+      background: var(--sun) !important;
+      border-bottom-color: transparent !important;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 160px 60px 80px;
+      gap: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(74,144,217,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-text { position: relative; z-index: 2; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--peach);
+      color: var(--sun);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge::before { content: '✦'; font-size: 0.7rem; }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--deep-blue);
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--sky);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 44px;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--deep-blue);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(26,58,92,0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--deep-blue);
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--deep-blue);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--deep-blue);
+      color: var(--white);
+    }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-card-stack {
+      position: relative;
+      width: 380px;
+      height: 460px;
+    }
+
+    .card-bg {
+      position: absolute;
+      border-radius: 32px;
+    }
+
+    .card-bg-1 {
+      width: 300px; height: 380px;
+      background: var(--sky);
+      top: 40px; right: 0;
+      opacity: 0.15;
+      transform: rotate(6deg);
+    }
+
+    .card-bg-2 {
+      width: 300px; height: 380px;
+      background: var(--sun);
+      top: 20px; right: 20px;
+      opacity: 0.2;
+      transform: rotate(3deg);
+    }
+
+    .hero-main-card {
+      position: absolute;
+      width: 300px; height: 380px;
+      background: var(--white);
+      border-radius: 32px;
+      top: 0; right: 40px;
+      box-shadow: 0 20px 60px rgba(26,58,92,0.12);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-image {
+      height: 220px;
+      background: linear-gradient(135deg, #B8DEFF 0%, #FFE5B4 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+
+    .card-content { padding: 20px; }
+
+    .card-content h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      color: var(--deep-blue);
+      margin-bottom: 8px;
+    }
+
+    .card-content p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card-tag {
+      display: inline-block;
+      background: var(--peach);
+      color: var(--sun);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Floating elements */
+    .float-pill {
+      position: absolute;
+      background: var(--white);
+      border-radius: 50px;
+      padding: 10px 18px;
+      box-shadow: 0 8px 24px rgba(26,58,92,0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .float-pill-1 { top: 10px; left: 0; animation-delay: 0s; }
+    .float-pill-2 { bottom: 60px; left: 10px; animation-delay: 1.5s; }
+
+    .pill-icon { font-size: 1.1rem; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* STATS */
+    .stats {
+      display: flex;
+      gap: 0;
+      background: var(--deep-blue);
+      margin: 0 60px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 44px 40px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--sun);
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 400;
+    }
+
+    /* FEATURES */
+    .section { padding: 100px 60px; }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--sky);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: var(--deep-blue);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 60px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(26,58,92,0.06);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(26,58,92,0.1);
+    }
+
+    .feature-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+
+    .icon-blue { background: rgba(74,144,217,0.12); }
+    .icon-sun { background: rgba(245,166,35,0.12); }
+    .icon-green { background: rgba(76,175,80,0.12); }
+    .icon-pink { background: rgba(233,30,99,0.1); }
+
+    .feature-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* FORUM PREVIEW */
+    .forum-section {
+      padding: 100px 60px;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--peach) 100%);
+    }
+
+    .forum-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .forum-posts { display: flex; flex-direction: column; gap: 16px; }
+
+    .forum-post {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      box-shadow: 0 4px 16px rgba(26,58,92,0.06);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .forum-post:hover { transform: translateX(6px); }
+
+    .avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .av1 { background: #FFE5B4; }
+    .av2 { background: #B8DEFF; }
+    .av3 { background: #C8F5C8; }
+
+    .post-body h4 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+      margin-bottom: 4px;
+    }
+
+    .post-body p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .post-meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: #AAA;
+    }
+
+    .post-meta span { display: flex; align-items: center; gap: 4px; }
+
+    /* ARTICLES */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .article-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26,58,92,0.12);
+    }
+
+    .article-thumb {
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+    }
+
+    .article-title-bar {
+      padding: 12px 14px;
+      border-top: 1px solid rgba(26,58,92,0.06);
+    }
+
+    .article-cat {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sky);
+      margin-bottom: 4px;
+    }
+
+    .article-title-bar h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 0.88rem;
+      color: var(--deep-blue);
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .article-body {
+      overflow: hidden;
+      padding: 14px;
+      background: var(--cream);
+      border-top: 1px solid rgba(26,58,92,0.06);
+    }
+
+    .article-body p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--sky);
+      text-decoration: none;
+    }
+
+    .article-link:hover { gap: 10px; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      margin: 0 60px 100px;
+      background: var(--deep-blue);
+      border-radius: 32px;
+      padding: 80px 80px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: 200px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(245,166,35,0.2), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .cta-banner h2 em {
+      font-style: italic;
+      color: var(--sun);
+      font-weight: 300;
+    }
+
+    .cta-banner p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    .cta-banner .btn-primary {
+      background: var(--sun);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 1rem;
+      padding: 18px 40px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--deep-blue);
+      color: rgba(255,255,255,0.6);
+      padding: 60px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo { color: var(--white); display: block; margin-bottom: 16px; }
+
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .footer-col h4 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .footer-col ul a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: var(--sun); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 16px 30px; }
+      .hero { grid-template-columns: 1fr; padding: 120px 30px 60px; }
+      .hero-visual { display: none; }
+      .stats { margin: 0 30px; }
+      .section, .forum-section { padding: 80px 30px; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+      .forum-layout { grid-template-columns: 1fr; }
+      .cta-banner { margin: 0 30px 80px; padding: 50px 40px; grid-template-columns: 1fr; }
+      footer { padding: 40px 30px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-top">
+      <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;">
+        <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+        <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+      </a>
+      <a href="forum.html" class="nav-cta" style="font-size:0.85rem;text-decoration:none;padding:10px 24px;border-radius:50px;background:var(--sun);color:#fff;font-weight:600;">Forum</a>
+    </div>
+    <ul class="nav-bottom">
+      <li><a href="index.html" class="active">Acasă</a></li>
+      <li><a href="prenatal.html">Perioada prenatală și nașterea</a></li>
+      <li><a href="crestere.html">Creșterea și educarea copilului</a></li>
+      <li><a href="intelepciune.html">Înțelepciunea mămicii</a></li>
+      <li><a href="retete.html">Rețete culinare</a></li>
+      <li><a href="jocuri.html">Jocuri online</a></li>
+      <li><a href="foto.html">Foto Povești</a></li>
+      <li><a href="teste.html">Teste și sondaje</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="acasa">
+    <div class="hero-text">
+      <div class="hero-badge">Comunitatea părinților români</div>
+      <h1>Totul pentru <em>copilul</em> tău</h1>
+      <p class="hero-sub">Sfaturi de la experți, o comunitate caldă de părinți și tot ce ai nevoie pentru a crește un copil fericit și sănătos.</p>
+      <div class="hero-buttons">
+        <a href="#forum" class="btn-primary">Intră în comunitate</a>
+        <a href="#etape" class="btn-secondary">Explorează etapele</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="card-bg card-bg-1"></div>
+        <div class="card-bg card-bg-2"></div>
+        <div class="hero-main-card">
+          <div class="card-image">🍼</div>
+          <div class="card-content">
+            <span class="card-tag">Articol nou</span>
+            <h3>Primele luni de viață</h3>
+            <p>Ghid complet pentru nou-născuți: somn, alimentație și dezvoltare.</p>
+          </div>
+        </div>
+        <div class="float-pill float-pill-1">
+          <span class="pill-icon">👶</span> 12.400 de părinți activi
+        </div>
+        <div class="float-pill float-pill-2">
+          <span class="pill-icon">💬</span> 3.200 de discuții în forum
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <span class="stat-number">12K+</span>
+      <span class="stat-label">Părinți înregistrați</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Articole publicate</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3.2K</span>
+      <span class="stat-label">Discuții în forum</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">98%</span>
+      <span class="stat-label">Părinți mulțumiți</span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section" id="despre">
+    <div class="section-label">De ce CopilulMeu.ro?</div>
+    <h2 class="section-title">Tot ce ai nevoie,<br>într-un singur loc</h2>
+    <p class="section-sub">De la primele zile ale sarcinii până la primii pași ai copilului tău, suntem alături de tine.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon icon-blue">💬</div>
+        <h3>Forum activ</h3>
+        <p>Discută cu alți părinți, pune întrebări și împărtășește experiențele tale într-o comunitate caldă și primitoare.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-sun">🤰</div>
+        <h3>Perioada prenatală & Nașterea</h3>
+        <p>Ghid complet de la preconcepție până la primele ore cu bebelușul tău, pas cu pas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-green">🧸</div>
+        <h3>Creșterea și educarea copilului</h3>
+        <p>Sfaturi practice pentru fiecare etapă de dezvoltare, de la 0 la 6 ani și mai departe.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-pink">❤️</div>
+        <h3>Înțelepciunea mămicii</h3>
+        <p>Experiențe reale, sfaturi din suflet și sprijin emoțional din partea mamelor din comunitatea noastră.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORUM PREVIEW -->
+  <section class="forum-section" id="forum">
+    <div class="forum-layout">
+      <div>
+        <div class="section-label">Forum</div>
+        <h2 class="section-title">Vorbim<br><em style="font-style:italic;color:var(--sky)">împreună</em></h2>
+        <p class="section-sub">Alătură-te miilor de părinți care schimbă sfaturi în fiecare zi.</p>
+        <a href="#" class="btn-primary" style="display:inline-block">Explorează forumul →</a>
+      </div>
+      <div class="forum-posts">
+        <div class="forum-post">
+          <div class="avatar av1">😊</div>
+          <div class="post-body">
+            <h4>Când să introduc alimente solide?</h4>
+            <p>Băiatul meu are 5 luni și mă întreb dacă e prea devreme să încerc primele piureuri...</p>
+            <div class="post-meta">
+              <span>💬 24 răspunsuri</span>
+              <span>👍 41 like-uri</span>
+            </div>
+          </div>
+        </div>
+        <div class="forum-post">
+          <div class="avatar av2">🌸</div>
+          <div class="post-body">
+            <h4>Sfaturi pentru somnul bebelușului</h4>
+            <p>Fetița mea de 3 luni se trezește la fiecare 2 ore noaptea. Ce metode ați folosit voi?</p>
+            <div class="post-meta">
+              <span>💬 38 răspunsuri</span>
+              <span>👍 62 like-uri</span>
+            </div>
+          </div>
+        </div>
+        <div class="forum-post">
+          <div class="avatar av3">🌟</div>
+          <div class="post-body">
+            <h4>Cele mai bune jucării educative 0-1 ani</h4>
+            <p>Am descoperit câteva jucării extraordinare care au ajutat mult la dezvoltarea motricității...</p>
+            <div class="post-meta">
+              <span>💬 17 răspunsuri</span>
+              <span>👍 29 like-uri</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGES TABS -->
+  <section class="section" id="articole">
+    <div class="section-label">Ghidul complet</div>
+    <h2 class="section-title">Etapele creșterii copilului tău</h2>
+    <p class="section-sub">De la planificarea sarcinii până la primii 6 ani — informații de încredere pentru fiecare moment important.</p>
+
+    <!-- TAB BUTTONS -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="preconceptie">
+        <span class="tab-icon">🌱</span>
+        <span class="tab-label">Preconcepția</span>
+      </button>
+      <button class="tab-btn" data-tab="sarcina">
+        <span class="tab-icon">🤰</span>
+        <span class="tab-label">Sarcina</span>
+      </button>
+      <button class="tab-btn" data-tab="nasterea">
+        <span class="tab-icon">👶</span>
+        <span class="tab-label">Nașterea</span>
+      </button>
+      <button class="tab-btn" data-tab="ghid">
+        <span class="tab-icon">🧸</span>
+        <span class="tab-label">Ghid 0–6 ani</span>
+      </button>
+    </div>
+
+    <!-- TAB CONTENT -->
+    <div class="tab-content active" id="tab-preconceptie">
+      <div class="tab-intro">
+        <p>Preconcepția este etapa în care viitorii părinți se pregătesc fizic, emoțional și medical pentru a aduce pe lume un copil sănătos. O pregătire atentă face toată diferența.</p>
+      </div>
+      <div class="articles-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">💑</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Cuplu</div>
+            <h3>Startul creșterii unui copil și cuplul, tată și mamă</h3>
+          </div>
+          <div class="article-body">
+            <p>Decizia de a deveni părinți este una dintre cele mai profunde din viața unui cuplu. Comunicarea, alinierea valorilor și pregătirea comună sunt fundamentul unui început sănătos pentru toată familia.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🩺</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Sănătate</div>
+            <h3>Sănătate și analize</h3>
+          </div>
+          <div class="article-body">
+            <p>Înainte de a concepe, atât mama cât și tatăl ar trebui să efectueze un set complet de analize. Acestea pot identifica factori de risc și asigura că ambii părinți sunt în cea mai bună formă pentru a concepe.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">🥦</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Nutriție</div>
+            <h3>Alimentație și suplimente</h3>
+          </div>
+          <div class="article-body">
+            <p>O dietă echilibrată bogată în acid folic, fier și vitamina D pregătește corpul pentru sarcină. Suplimentele prenatale, recomandate de medic, completează nutrienții esențiali pentru o concepție sănătoasă.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">📅</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Fertilitate</div>
+            <h3>Zile fertile</h3>
+          </div>
+          <div class="article-body">
+            <p>Cunoașterea ciclului menstrual și identificarea zilelor fertile cresc semnificativ șansele de concepție. Ovulația apare de obicei în jurul zilei 14 a ciclului, iar fereastra fertilă durează aproximativ 5–6 zile.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">⏳</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Fertilitate</div>
+            <h3>Când sarcina întârzie</h3>
+          </div>
+          <div class="article-body">
+            <p>Dacă după 12 luni de încercări sarcina nu apare, este recomandat un consult de specialitate. Cauzele pot fi diverse și tratabile — iar sprijinul medical și emoțional este esențial.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-sarcina">
+      <div class="tab-intro">
+        <p>Sarcina este o călătorie de 9 luni plină de transformări uimitoare. Fiecare trimestru aduce schimbări noi pentru mamă și o dezvoltare incredibilă pentru bebeluș.</p>
+      </div>
+      <div class="articles-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🌱</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Trimestrul I · 0–12 săptămâni</div>
+            <h3>Primul trimestru</h3>
+          </div>
+          <div class="article-body">
+            <p>Primele 12 săptămâni sunt cele mai delicate ale sarcinii. Corpul mamei suferă transformări hormonale intense — greața, oboseala și sensibilitatea emoțională sunt complet normale. Primul consult prenatal, ecografia de confirmare și acidul folic sunt pașii esențiali.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🌟</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Trimestrul II · 13–27 săptămâni</div>
+            <h3>Al doilea trimestru</h3>
+          </div>
+          <div class="article-body">
+            <p>Trimestrul al doilea este adesea numit „luna de miere a sarcinii" — greața dispare, energia revine și burtica începe să se vadă. Ecografia morfologică dezvăluie sexul copilului și confirmă dezvoltarea sănătoasă.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">🏁</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Trimestrul III · 28–42 săptămâni</div>
+            <h3>Al treilea trimestru</h3>
+          </div>
+          <div class="article-body">
+            <p>Bebelușul ia rapid în greutate și se pregătește pentru naștere. Este momentul să pregătești geanta pentru maternitate și să finalizezi planul de naștere. Consulturile devin mai frecvente.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-nasterea">
+      <div class="tab-intro">
+        <p>Nașterea este momentul culminant al sarcinii — o experiență intensă și transformatoare. Pregătirea din timp îți oferă încredere și calm în fața acestui eveniment unic.</p>
+      </div>
+      <div class="articles-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">🚗</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Pregătire</div>
+            <h3>Când plec la maternitate?</h3>
+          </div>
+          <div class="article-body">
+            <p>Contracțiile regulate la 5 minute interval timp de cel puțin o oră sau ruperea membranelor sunt semnale clare. Dacă simți că ceva nu este în regulă, nu ezita — este întotdeauna mai bine să mergi și să fii verificată.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🧳</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Pregătire</div>
+            <h3>Bagajul și actele</h3>
+          </div>
+          <div class="article-body">
+            <p>Geanta pentru maternitate trebuie pregătită din săptămâna 36. Include acte esențiale — carnetul de gravidă, buletinul, asigurarea medicală — haine confortabile și ce are nevoie bebelușul.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🌬️</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Travaliu</div>
+            <h3>În travaliu, mai ușor</h3>
+          </div>
+          <div class="article-body">
+            <p>Respirația conștientă, schimbarea pozițiilor, masajul lombar și suportul partenerului fac o diferență enormă. Epidurala este o opțiune sigură — informează-te din timp despre toate variantele disponibile.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">👩‍⚕️</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Naștere</div>
+            <h3>Cum naști</h3>
+          </div>
+          <div class="article-body">
+            <p>Nașterea naturală și cezariana sunt cele două căi principale. Indiferent de modalitate, cel mai important lucru este siguranța mamei și a bebelușului. Discută deschis cu medicul tău.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">🤱</div>
+          <div class="article-title-bar">
+            <div class="article-cat">Post-naștere</div>
+            <h3>Primele ore cu bebe</h3>
+          </div>
+          <div class="article-body">
+            <p>Contactul piele-la-piele reglează temperatura bebelușului și stimulează alăptarea. Prima privire și primul supt sunt momente pe care nu le vei uita niciodată.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-ghid">
+      <div class="tab-intro">
+        <p>Primii 6 ani din viața copilului sunt cei mai importanți pentru dezvoltarea creierului, limbajului și personalității. Fiecare etapă vine cu provocări noi și bucurii de neprețuit.</p>
+      </div>
+      <div class="articles-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🍼</div>
+          <div class="article-title-bar">
+            <div class="article-cat">0–6 luni</div>
+            <h3>Nou-născutul și primele luni</h3>
+          </div>
+          <div class="article-body">
+            <p>Bebelușul doarme până la 18 ore pe zi și se hrănește la cerere. Spre luna 3–4, apar primele zâmbete sociale — semne că micuțul tău te recunoaște și se simte în siguranță.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🧩</div>
+          <div class="article-title-bar">
+            <div class="article-cat">6–12 luni</div>
+            <h3>Explorare și diversificare</h3>
+          </div>
+          <div class="article-body">
+            <p>Bebelușul devine un mic explorator — se târăște, stă în șezut și face primii pași. Diversificarea alimentației începe cu piureuri de legume și fructe, deschizând o lume nouă de gusturi.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">🚶</div>
+          <div class="article-title-bar">
+            <div class="article-cat">1–2 ani</div>
+            <h3>Primii pași și independența</h3>
+          </div>
+          <div class="article-body">
+            <p>Vocabularul crește exploziv — de la câteva cuvinte la peste 50 spre vârsta de 2 ani. Crizele de furie sunt normale și reprezintă o etapă firească de dezvoltare emoțională.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">🎭</div>
+          <div class="article-title-bar">
+            <div class="article-cat">2–3 ani</div>
+            <h3>„Eu singur!" — vârsta autonomiei</h3>
+          </div>
+          <div class="article-body">
+            <p>Vârsta de 2–3 ani este „teribilii doi" — copilul vrea să facă totul singur. Răbdarea, consecvența și limitele clare cu dragoste sunt cheia unui parcurs armonios.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">🎨</div>
+          <div class="article-title-bar">
+            <div class="article-cat">3–6 ani</div>
+            <h3>Grădinița și imaginația</h3>
+          </div>
+          <div class="article-body">
+            <p>Imaginația este la apogeu, iar grădinița devine un spațiu esențial. Cititul zilnic, activitățile creative și mișcarea pun bazele unui copil echilibrat și pregătit pentru școală.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .tabs-nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: 2px solid rgba(26,58,92,0.12);
+      background: var(--white);
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--sky);
+      color: var(--sky);
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+      background: var(--deep-blue);
+      border-color: var(--deep-blue);
+      color: var(--white);
+      box-shadow: 0 8px 24px rgba(26,58,92,0.2);
+    }
+
+    .tab-icon { font-size: 1.2rem; }
+
+    .tab-content {
+      display: none;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .tab-content.active { display: block; }
+
+    .tab-intro {
+      background: var(--peach);
+      border-radius: 18px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      border-left: 4px solid var(--sun);
+    }
+
+    .tab-intro p {
+      font-size: 1rem;
+      color: var(--deep-blue);
+      line-height: 1.7;
+      font-weight: 400;
+    }
+  </style>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+
+  <!-- ARTICOL RECENT -->
+  <section class="section" id="articol-recent" style="background: var(--white); padding: 80px 60px;">
+    <div style="max-width: 860px; margin: 0 auto;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span style="background:var(--sun);color:#fff;font-size:0.72rem;font-weight:700;padding:5px 14px;border-radius:50px;text-transform:uppercase;letter-spacing:1px;">🆕 Cel mai recent articol</span>
+        <span style="font-size:0.8rem;color:var(--muted);">27 Martie 2026</span>
+      </div>
+      <h2 style="font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;color:var(--deep-blue);letter-spacing:-1px;line-height:1.15;margin-bottom:12px;">Cum să te comporți cu copiii mici</h2>
+      <p style="font-size:1rem;font-style:italic;color:var(--sky);font-weight:300;margin-bottom:32px;border-left:3px solid var(--sky);padding-left:16px;">Copiii mici nu au nevoie doar de reguli, ci mai ales de siguranță, blândețe și exemple bune.</p>
+
+      <div style="font-size:0.95rem;color:var(--text);line-height:1.85;font-weight:300;display:flex;flex-direction:column;gap:20px;">
+        <p>Mulți părinți și mulți adulți își pun aceeași întrebare: cum trebuie să ne comportăm cu copiii mici? Răspunsul nu ține doar de hrană, de reguli sau de program, ci mai ales de felul în care copilul este tratat în fiecare zi. Un copil mic învață permanent. El observă, imită, testează, pune întrebări și reacționează la tonul vocii, la gesturi și la atmosfera din jurul său. De aceea, relația cu el trebuie construită cu răbdare, calm și consecvență.</p>
+        <p>Într-un anumit sens, creierul copilului poate fi comparat cu un sistem care se formează pas cu pas. Nu știe dinainte cum funcționează lumea, iar adultul este cel care îi oferă primele explicații, primele modele și primele repere. Tocmai de aceea este important ca adulții să nu pornească de la ideea că „ar trebui să știe deja", ci să îl însoțească în procesul de învățare.</p>
+        <p>Una dintre cele mai eficiente forme de învățare la vârste mici este joaca. Pentru copil, joaca nu este pierdere de timp, ci principalul mod prin care înțelege lumea. Prin joc, el exersează mișcări, învață culori, forme, numere, cuvinte și relații simple de cauză și efect. O numărătoare, cuburile, cărțile ilustrate sau jocurile de sortare pot părea lucruri simple, dar ele îl ajută să își organizeze gândirea.</p>
+        <p>La fel de importantă este repetiția. Copiii mici au nevoie să audă de mai multe ori aceleași cuvinte, să refacă aceleași gesturi și să repete aceleași rutine până când acestea devin familiare. Repetiția nu trebuie însă transformată într-o presiune. Atunci când părintele repetă cu răbdare sunete, propoziții scurte sau mici reguli de comportament, copilul învață mai ușor și capătă încredere.</p>
+        <p>Felul în care îi vorbim copilului contează enorm. Chiar dacă este foarte mic, el simte diferența dintre un ton cald și unul agresiv. De aceea, este bine să fie ascultat, încurajat și lăsat să se exprime, chiar dacă nu pronunță perfect. Când adultul îl ascultă cu atenție și îi răspunde calm, copilul învață că este important, că poate comunica și că merită respect.</p>
+        <p>Un alt lucru esențial este exemplul personal. Copiii mici imită mult mai mult decât ascultă explicații lungi. Dacă văd în casă răbdare, politețe, respect și ordine, vor prelua aceste modele. Educația nu înseamnă doar să îi spui copilului ce să facă, ci să îi arăți prin propriul comportament cum se trăiește frumos și echilibrat.</p>
+        <p style="background:var(--peach);border-left:4px solid var(--sun);border-radius:0 12px 12px 0;padding:20px 24px;font-style:italic;"><strong style="font-style:normal;">În concluzie</strong>, a te comporta bine cu un copil mic înseamnă să îl tratezi cu blândețe, să îl înveți prin joacă, să îi vorbești frumos, să îi oferi hrană potrivită și să îi fii un exemplu bun. Primele etape ale vieții sunt decisive, iar ceea ce primește acum — atenție, siguranță și răbdare — va influența felul în care se va dezvolta mai târziu.</p>
+      </div>
+
+      <div style="margin-top:36px;padding-top:24px;border-top:1px solid rgba(26,58,92,0.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--peach);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">✍️</div>
+          <div>
+            <div style="font-size:0.82rem;font-weight:600;color:var(--deep-blue);">Echipa CopilulMeu.ro</div>
+            <div style="font-size:0.74rem;color:var(--muted);">Articol revizuit · 27 Martie 2026</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <span style="background:var(--peach);color:var(--sun);font-size:0.72rem;font-weight:700;padding:5px 12px;border-radius:50px;">Educație</span>
+          <span style="background:var(--peach);color:var(--sun);font-size:0.72rem;font-weight:700;padding:5px 12px;border-radius:50px;">Copii mici</span>
+          <span style="background:var(--peach);color:var(--sun);font-size:0.72rem;font-weight:700;padding:5px 12px;border-radius:50px;">Comportament</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div>
+      <h2>Alătură-te comunității<br><em>CopilulMeu.ro</em></h2>
+      <p>Gratuit pentru toți părinții. Înregistrează-te și conectează-te cu mii de familii din România.</p>
+    </div>
+    <a href="#" class="btn-primary">Înregistrează-te gratuit</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;margin-bottom:16px;">
+          <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+          <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+        </a>
+        <p>Comunitatea părinților români. Totul pentru copilul tău — sfaturi, articole și oameni care înțeleg.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="prenatal.html">Perioada prenatală și nașterea</a></li>
+          <li><a href="crestere.html">Creșterea și educarea copilului</a></li>
+          <li><a href="intelepciune.html">Înțelepciunea mămicii</a></li>
+          <li><a href="retete.html">Rețete culinare</a></li>
+          <li><a href="jocuri.html">Jocuri online</a></li>
+          <li><a href="foto.html">Foto Povești</a></li>
+          <li><a href="teste.html">Teste și sondaje</a></li>
+          <li><a href="forum.html">Forum</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categorii</h4>
+        <ul>
+          <li><a href="#">Sarcină</a></li>
+          <li><a href="#">Nou-născut</a></li>
+          <li><a href="#">Nutriție</a></li>
+          <li><a href="#">Somn</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Politică GDPR</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CopilulMeu.ro — Toate drepturile rezervate</span>
+      <span>Făcut cu ❤️ pentru părinții din România</span>
+    </div>
+  </footer>
+
+</body>
+</html>

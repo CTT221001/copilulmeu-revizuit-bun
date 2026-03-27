@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perioada Prenatală & Nașterea — CopilulMeu.ro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5A623;
+      --sky: #4A90D9;
+      --cream: #FFF8F0;
+      --peach: #FFE8CC;
+      --deep-blue: #1A3A5C;
+      --text: #2C2C2C;
+      --muted: #7A7A7A;
+      --white: #ffffff;
+      --radius: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 32px;
+      background: rgba(255,248,240,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,166,35,0.15);
+      gap: 16px;
+    }
+    nav ul { display: flex; gap: 4px; list-style: none; flex-wrap: nowrap; align-items: center; }
+    nav ul a { font-size: 0.78rem; font-weight: 500; color: var(--deep-blue); text-decoration: none; padding: 6px 8px; border-radius: 8px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    nav ul a:hover { background: var(--peach); color: var(--sun); }
+    nav ul a.active { color: var(--sun); font-weight: 600; }
+    .nav-cta { background: var(--sun); color: var(--white) !important; padding: 8px 16px !important; border-radius: 50px; font-weight: 600 !important; }
+
+    /* HERO */
+    .page-hero {
+      min-height: 420px;
+      background: linear-gradient(135deg, var(--deep-blue) 0%, #2A5A8C 100%);
+      display: flex; align-items: center;
+      padding: 140px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(245,166,35,0.15), transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: 200px;
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(74,144,217,0.2), transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner { position: relative; z-index: 2; }
+    .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--sun); }
+    .page-hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+    .page-hero h1 em { font-style: italic; font-weight: 300; color: var(--sun); }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 300; max-width: 520px; line-height: 1.7; }
+
+    /* MAIN LAYOUT */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 60px; }
+
+    /* SECTION HEADERS */
+    .section-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--sky); margin-bottom: 12px; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 2.8vw, 2.4rem); font-weight: 800; color: var(--deep-blue); letter-spacing: -1px; line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 48px; max-width: 580px; }
+
+    /* TABS */
+    .tabs-nav { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+    .tab-btn {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 50px;
+      border: 2px solid rgba(26,58,92,0.12);
+      background: var(--white); color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 600;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .tab-btn:hover { border-color: var(--sky); color: var(--sky); transform: translateY(-2px); }
+    .tab-btn.active { background: var(--deep-blue); border-color: var(--deep-blue); color: var(--white); box-shadow: 0 8px 24px rgba(26,58,92,0.2); }
+    .tab-icon { font-size: 1.1rem; }
+    .tab-content { display: none; animation: fadeUp 0.4s ease both; }
+    .tab-content.active { display: block; }
+
+    /* INTRO BOX */
+    .tab-intro {
+      background: var(--peach); border-radius: 18px;
+      padding: 24px 32px; margin-bottom: 36px;
+      border-left: 4px solid var(--sun);
+    }
+    .tab-intro p { font-size: 1rem; color: var(--deep-blue); line-height: 1.7; }
+
+    /* ARTICLES GRID */
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .article-card {
+      background: var(--white); border-radius: var(--radius);
+      overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(26,58,92,0.06);
+    }
+    .article-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,58,92,0.1); }
+    .article-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .article-body { padding: 24px; }
+    .article-cat { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--sky); margin-bottom: 8px; }
+    .article-body h3 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--deep-blue); margin-bottom: 10px; line-height: 1.3; }
+    .article-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+    .article-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 0.85rem; font-weight: 600; color: var(--sky); text-decoration: none; transition: gap 0.2s; }
+    .article-link:hover { gap: 10px; }
+
+    /* TRIMESTER TIMELINE */
+    .timeline { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+    .timeline-item {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 0; position: relative;
+    }
+    .timeline-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 59px; top: 52px; bottom: 0;
+      width: 2px; background: rgba(74,144,217,0.2);
+    }
+    .timeline-left { display: flex; flex-direction: column; align-items: center; padding-top: 8px; gap: 8px; }
+    .timeline-dot {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--deep-blue); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0; z-index: 1;
+      box-shadow: 0 4px 12px rgba(26,58,92,0.2);
+    }
+    .timeline-week { font-size: 0.72rem; font-weight: 700; color: var(--sky); text-align: center; letter-spacing: 0.5px; }
+    .timeline-right {
+      background: var(--white); border-radius: 18px;
+      padding: 24px 28px; margin: 6px 0 24px 20px;
+      border: 1px solid rgba(26,58,92,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .timeline-right:hover { transform: translateX(4px); box-shadow: 0 8px 24px rgba(26,58,92,0.08); }
+    .timeline-right h3 { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--deep-blue); margin-bottom: 10px; }
+    .timeline-right p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .timeline-tag { display: inline-block; background: var(--peach); color: var(--sun); font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 50px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* FOOTER */
+    footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 60px; margin-top: 60px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1024px) {
+      nav { padding: 16px 24px; }
+      nav ul { gap: 16px; }
+      .page-hero { padding: 120px 30px 60px; }
+      .main-wrap { padding: 60px 30px; }
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+      .timeline-item { grid-template-columns: 80px 1fr; }
+      footer { padding: 40px 30px; }
+    }
+    @media (max-width: 640px) {
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;">
+      <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+      <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+    </a>
+    <ul>
+    <ul>
+      <li><a href="index.html">Acasă</a></li>
+      <li><a href="prenatal.html" class="active">Perioada prenatală și nașterea</a></li>
+      <li><a href="crestere.html">Creșterea și educarea copilului</a></li>
+      <li><a href="intelepciune.html">Înțelepciunea mămicii</a></li>
+      <li><a href="retete.html">Rețete culinare</a></li>
+      <li><a href="jocuri.html">Jocuri online</a></li>
+      <li><a href="foto.html">Foto Povești</a></li>
+      <li><a href="teste.html">Teste și sondaje</a></li>
+      <li><a href="forum.html" class="nav-cta">Forum</a></li>
+    </ul>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="index.html">Acasă</a> › Perioada Prenatală & Nașterea</div>
+      <h1>Perioada Prenatală<br>& <em>Nașterea</em></h1>
+      <p>Tot ce trebuie să știi de la primele semne de sarcină până la momentul în care ții în brațe cel mai prețios om din viața ta.</p>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+
+    <!-- TABS -->
+    <div class="section-label">Explorează</div>
+    <h2 class="section-title">Alege etapa ta</h2>
+    <p class="section-sub">Fiecare etapă a sarcinii și nașterii vine cu informații și sfaturi personalizate pentru tine.</p>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="preconcept">
+        <span class="tab-icon">🌱</span> Preconcepție
+      </button>
+      <button class="tab-btn" data-tab="trimestre">
+        <span class="tab-icon">🤰</span> Trimestre sarcină
+      </button>
+      <button class="tab-btn" data-tab="nastere">
+        <span class="tab-icon">👶</span> Nașterea
+      </button>
+    </div>
+
+    <!-- TAB: PRECONCEPȚIE -->
+    <div class="tab-content active" id="tab-preconcept">
+      <div class="tab-intro">
+        <p>Preconcepția este etapa în care viitorii părinți se pregătesc fizic, emoțional și medical pentru a aduce pe lume un copil sănătos. O pregătire atentă face toată diferența.</p>
+      </div>
+      <div class="articles-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">💑</div>
+          <div class="article-body">
+            <div class="article-cat">Cuplu</div>
+            <h3>Startul creșterii unui copil și cuplul, tată și mamă</h3>
+            <p>Decizia de a deveni părinți este una dintre cele mai profunde din viața unui cuplu. Comunicarea, alinierea valorilor și pregătirea comună sunt fundamentul unui început sănătos pentru toată familia.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🩺</div>
+          <div class="article-body">
+            <div class="article-cat">Sănătate</div>
+            <h3>Sănătate și analize</h3>
+            <p>Înainte de a concepe, atât mama cât și tatăl ar trebui să efectueze un set complet de analize. Acestea pot identifica factori de risc și asigura că ambii părinți sunt în cea mai bună formă pentru a concepe.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">🥦</div>
+          <div class="article-body">
+            <div class="article-cat">Nutriție</div>
+            <h3>Alimentație și suplimente</h3>
+            <p>O dietă echilibrată bogată în acid folic, fier și vitamina D pregătește corpul pentru sarcină. Suplimentele prenatale recomandate de medic completează nutrienții esențiali pentru o concepție sănătoasă.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">📅</div>
+          <div class="article-body">
+            <div class="article-cat">Fertilitate</div>
+            <h3>Zile fertile</h3>
+            <p>Cunoașterea ciclului menstrual și identificarea zilelor fertile cresc semnificativ șansele de concepție. Ovulația apare de obicei în jurul zilei 14 a ciclului, iar fereastra fertilă durează aproximativ 5–6 zile.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">⏳</div>
+          <div class="article-body">
+            <div class="article-cat">Fertilitate</div>
+            <h3>Când sarcina întârzie</h3>
+            <p>Dacă după 12 luni de încercări sarcina nu apare, este recomandat un consult de specialitate. Cauzele pot fi diverse și tratabile — sprijinul medical și emoțional este esențial în această perioadă.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: TRIMESTRE -->
+    <div class="tab-content" id="tab-trimestre">
+      <div class="tab-intro">
+        <p>Sarcina durează aproximativ 40 de săptămâni și este împărțită în trei trimestre, fiecare cu transformările și provocările sale specifice. Cunoașterea acestor etape te ajută să fii pregătită pentru tot ce urmează.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="timeline-dot">🌱</div>
+            <div class="timeline-week">0–12 săpt.</div>
+          </div>
+          <div class="timeline-right">
+            <span class="timeline-tag">Trimestrul I</span>
+            <h3>Primele 12 săptămâni — începutul miracolului</h3>
+            <p>Primele 12 săptămâni sunt cele mai delicate ale sarcinii. Corpul mamei suferă transformări hormonale intense — greața, oboseala și sensibilitatea emoțională sunt complet normale. Bebelușul evoluează de la un grup de celule la un fetus cu inimă care bate și organe formate. Primul consult prenatal, ecografia de confirmare și începerea acidului folic sunt pașii esențiali în această perioadă.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="timeline-dot">🌟</div>
+            <div class="timeline-week">13–27 săpt.</div>
+          </div>
+          <div class="timeline-right">
+            <span class="timeline-tag">Trimestrul II</span>
+            <h3>Săptămânile 13–27 — „luna de miere" a sarcinii</h3>
+            <p>Trimestrul al doilea este adesea cel mai plăcut — greața dispare, energia revine și burtica începe să se vadă. În jurul săptămânii 20, mama simte primele mișcări ale bebelușului, un moment de neuitat. Ecografia morfologică din această perioadă oferă o imagine detaliată a dezvoltării fătului și, dacă doriți, poate dezvălui sexul copilului.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="timeline-dot">🏁</div>
+            <div class="timeline-week">28–42 săpt.</div>
+          </div>
+          <div class="timeline-right">
+            <span class="timeline-tag">Trimestrul III</span>
+            <h3>Săptămânile 28–42 — pregătirea pentru marea întâlnire</h3>
+            <p>În ultimele săptămâni de sarcină, bebelușul ia rapid în greutate și se pregătește pentru naștere. Mama poate simți disconfort, dificultăți de somn și contracții Braxton-Hicks. Este momentul să pregătești geanta pentru maternitate, să finalizezi planul de naștere și să urmărești atent mișcările bebelușului. Consulturile devin mai frecvente, iar medicul va monitoriza poziția fătului.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: NAȘTERE -->
+    <div class="tab-content" id="tab-nastere">
+      <div class="tab-intro">
+        <p>Nașterea este momentul culminant al sarcinii — o experiență intensă și transformatoare. Pregătirea din timp îți oferă încredere și calm în fața acestui eveniment unic.</p>
+      </div>
+      <div class="articles-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">🚗</div>
+          <div class="article-body">
+            <div class="article-cat">Pregătire</div>
+            <h3>Când plec la maternitate?</h3>
+            <p>Contracțiile regulate la 5 minute interval timp de cel puțin o oră sau ruperea membranelor sunt semnale clare. Dacă simți că ceva nu este în regulă, nu ezita — este întotdeauna mai bine să mergi și să fii verificată.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🧳</div>
+          <div class="article-body">
+            <div class="article-cat">Pregătire</div>
+            <h3>Bagajul și actele</h3>
+            <p>Geanta pentru maternitate ar trebui pregătită din săptămâna 36. Include acte esențiale — carnetul de gravidă, buletinul, asigurarea medicală — haine confortabile, produse de igienă și ce are nevoie bebelușul.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🌬️</div>
+          <div class="article-body">
+            <div class="article-cat">Travaliu</div>
+            <h3>În travaliu, mai ușor</h3>
+            <p>Respirația conștientă, schimbarea pozițiilor, masajul lombar și suportul partenerului fac o diferență enormă. Epidurala este o opțiune sigură și eficientă — informează-te din timp despre toate variantele disponibile.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">👩‍⚕️</div>
+          <div class="article-body">
+            <div class="article-cat">Naștere</div>
+            <h3>Cum naști</h3>
+            <p>Nașterea naturală și cezariana sunt cele două căi principale. Indiferent de modalitate, cel mai important lucru este siguranța mamei și a bebelușului. Discută deschis cu medicul tău pentru a înțelege toate opțiunile.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">🤱</div>
+          <div class="article-body">
+            <div class="article-cat">Post-naștere</div>
+            <h3>Primele ore cu bebe</h3>
+            <p>Contactul piele-la-piele reglează temperatura bebelușului, îi calmează ritmul cardiac și stimulează alăptarea. Prima privire, primul supt și mirosul unic al bebelușului tău sunt momente pe care nu le vei uita niciodată.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <span>© 2026 CopilulMeu.ro — Toate drepturile rezervate</span>
+      <span>Făcut cu ❤️ pentru părinții din România</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creșterea și educarea copilului — CopilulMeu.ro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5A623;
+      --sky: #4A90D9;
+      --cream: #FFF8F0;
+      --peach: #FFE8CC;
+      --deep-blue: #1A3A5C;
+      --text: #2C2C2C;
+      --muted: #7A7A7A;
+      --white: #ffffff;
+      --green: #4CAF50;
+      --light-green: #E8F5E9;
+      --radius: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,248,240,0.97); backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(245,166,35,0.2);
+    }
+    .nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; border-bottom: 1px solid rgba(245,166,35,0.1);
+    }
+    .nav-bottom {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 32px; gap: 0; list-style: none;
+    }
+    .nav-bottom li a {
+      display: block; font-size: 0.8rem; font-weight: 500; color: var(--deep-blue);
+      text-decoration: none; padding: 10px 14px; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-bottom li a:hover { color: var(--sun); border-bottom-color: var(--sun); }
+    .nav-bottom li a.active { color: var(--sun); border-bottom-color: var(--sun); font-weight: 600; }
+    .nav-cta {
+      background: var(--sun) !important; color: var(--white) !important;
+      border-radius: 50px !important; padding: 8px 20px !important;
+      font-weight: 600 !important; border-bottom: none !important; margin-left: 8px;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,166,35,0.4); }
+
+    /* HERO */
+    .page-hero {
+      min-height: 400px;
+      background: linear-gradient(135deg, #1A3A5C 0%, #2E6B3E 100%);
+      display: flex; align-items: center;
+      padding: 160px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(245,166,35,0.15), transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; bottom: -60px; left: 300px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(76,175,80,0.2), transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner { position: relative; z-index: 2; }
+    .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--sun); }
+    .page-hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px;
+    }
+    .page-hero h1 em { font-style: italic; font-weight: 300; color: var(--sun); }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 300; max-width: 520px; line-height: 1.7; }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 60px; }
+
+    .section-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--sky); margin-bottom: 12px; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 2.8vw, 2.4rem); font-weight: 800; color: var(--deep-blue); letter-spacing: -1px; line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 48px; max-width: 580px; }
+
+    /* AGE TABS */
+    .age-tabs { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
+    .age-btn {
+      padding: 10px 22px; border-radius: 50px;
+      border: 2px solid rgba(26,58,92,0.12);
+      background: var(--white); color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .age-btn:hover { border-color: var(--green); color: var(--green); }
+    .age-btn.active { background: var(--green); border-color: var(--green); color: var(--white); box-shadow: 0 6px 20px rgba(76,175,80,0.25); }
+    .age-content { display: none; animation: fadeUp 0.4s ease both; }
+    .age-content.active { display: block; }
+
+    /* ARTICLE CARDS GRID */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .article-card {
+      background: var(--white); border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .article-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,58,92,0.1); }
+    .article-thumb { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; }
+    .article-body { padding: 20px; }
+    .article-cat { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 6px; }
+    .article-body h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--deep-blue); margin-bottom: 8px; line-height: 1.35; font-weight: 600; }
+    .article-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .article-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--sky); text-decoration: none; transition: gap 0.2s; }
+    .article-link:hover { gap: 10px; }
+
+    /* TIPS SECTION */
+    .tips-section { padding: 80px 0; }
+    .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .tip-card {
+      background: var(--white); border-radius: 20px; padding: 32px;
+      border-left: 4px solid var(--sun);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .tip-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,58,92,0.08); }
+    .tip-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+    .tip-card h3 { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--deep-blue); margin-bottom: 10px; font-weight: 600; }
+    .tip-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    /* EMOTIONAL DEV SECTION */
+    .emotional-section { padding: 80px 0; }
+    .emotional-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .emotion-card {
+      background: var(--white); border-radius: 18px; padding: 28px 22px;
+      text-align: center; border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .emotion-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(26,58,92,0.1); }
+    .emotion-icon { font-size: 2.5rem; display: block; margin-bottom: 14px; }
+    .emotion-card h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--deep-blue); margin-bottom: 8px; font-weight: 600; }
+    .emotion-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+    /* PLAY & LEARN SECTION */
+    .play-section { padding: 80px 0; }
+    .play-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .play-card {
+      border-radius: 20px; padding: 32px 28px; position: relative; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .play-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .play-card.green { background: linear-gradient(135deg, #E8F5E9, #C8F5C8); }
+    .play-card.blue { background: linear-gradient(135deg, #E3F2FD, #B8DEFF); }
+    .play-card.sun { background: linear-gradient(135deg, #FFF8E1, #FFE5B4); }
+    .play-card.pink { background: linear-gradient(135deg, #FCE4EC, #FFD6E0); }
+    .play-card.purple { background: linear-gradient(135deg, #F3E5F5, #E8D5FF); }
+    .play-card.teal { background: linear-gradient(135deg, #E0F2F1, #B2DFDB); }
+    .play-number { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 800; color: rgba(26,58,92,0.08); position: absolute; top: 16px; right: 20px; line-height: 1; }
+    .play-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+    .play-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--deep-blue); margin-bottom: 10px; font-weight: 600; }
+    .play-card p { font-size: 0.88rem; color: var(--text); line-height: 1.65; font-weight: 300; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: var(--deep-blue); border-radius: 28px; padding: 60px;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 40px; margin-top: 80px;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; top: -40px; right: 160px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(76,175,80,0.2), transparent 70%);
+      border-radius: 50%;
+    }
+    .cta-banner h2 { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.2; margin-bottom: 10px; }
+    .cta-banner h2 em { font-style: italic; color: var(--sun); font-weight: 300; }
+    .cta-banner p { color: rgba(255,255,255,0.6); font-size: 0.95rem; font-weight: 300; }
+    .btn-primary { background: var(--sun); color: var(--white); padding: 16px 36px; border-radius: 50px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; white-space: nowrap; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(245,166,35,0.35); }
+
+    /* DIVIDER */
+    .section-divider { border: none; border-top: 1px solid rgba(26,58,92,0.08); margin: 0; }
+
+    /* FOOTER */
+    footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 60px; margin-top: 0; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1024px) {
+      nav .nav-bottom li a { font-size: 0.72rem; padding: 8px 10px; }
+      .page-hero { padding: 140px 30px 60px; }
+      .main-wrap { padding: 60px 30px; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .emotional-grid { grid-template-columns: repeat(2, 1fr); }
+      .play-grid { grid-template-columns: repeat(2, 1fr); }
+      .tips-grid { grid-template-columns: 1fr; }
+      .cta-banner { grid-template-columns: 1fr; padding: 40px; }
+      footer { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-top">
+      <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;">
+        <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+        <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+      </a>
+      <a href="forum.html" class="nav-cta" style="text-decoration:none;font-size:0.85rem;">Forum</a>
+    </div>
+    <ul class="nav-bottom">
+      <li><a href="index.html">Acasă</a></li>
+      <li><a href="prenatal.html">Perioada prenatală și nașterea</a></li>
+      <li><a href="crestere.html" class="active">Creșterea și educarea copilului</a></li>
+      <li><a href="intelepciune.html">Înțelepciunea mămicii</a></li>
+      <li><a href="retete.html">Rețete culinare</a></li>
+      <li><a href="jocuri.html">Jocuri online</a></li>
+      <li><a href="foto.html">Foto Povești</a></li>
+      <li><a href="teste.html">Teste și sondaje</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="index.html">Acasă</a> › Creșterea și educarea copilului</div>
+      <h1>Creșterea și<br><em>educarea copilului</em></h1>
+      <p>Ghid complet pentru fiecare etapă — de la primii pași la primele lecții de viață. Sfaturi practice, bazate pe dovezi, pentru părinți dedicați.</p>
+    </div>
+  </section>
+
+  <div class="main-wrap">
+
+    <!-- ARTICOLE PE VARSTE -->
+    <div class="section-label">Ghid pe vârste</div>
+    <h2 class="section-title">Articole pe categorii de vârstă</h2>
+    <p class="section-sub">Fiecare etapă de dezvoltare vine cu nevoile și caracteristicile ei. Alege vârsta copilului tău pentru informații personalizate.</p>
+
+    <div class="age-tabs">
+      <button class="age-btn active" data-age="0-1">0–1 an</button>
+      <button class="age-btn" data-age="1-3">1–3 ani</button>
+      <button class="age-btn" data-age="3-6">3–6 ani</button>
+      <button class="age-btn" data-age="6-10">6–10 ani</button>
+    </div>
+
+    <div class="age-content active" id="age-0-1">
+      <div class="cards-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🍼</div>
+          <div class="article-body">
+            <div class="article-cat">0–1 an · Dezvoltare</div>
+            <h3>Etapele de dezvoltare în primul an de viață</h3>
+            <p>De la primul zâmbet la primii pași — cum se dezvoltă bebelușul lună cu lună și ce poți face pentru a-l sprijini.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🧠</div>
+          <div class="article-body">
+            <div class="article-cat">0–1 an · Stimulare</div>
+            <h3>Stimularea cognitivă a bebelușului</h3>
+            <p>Creierul bebelușului se dezvoltă cel mai rapid în primul an. Jocurile senzoriale, muzica și contactul vizual sunt cele mai bune instrumente de stimulare.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">💤</div>
+          <div class="article-body">
+            <div class="article-cat">0–1 an · Somn</div>
+            <h3>Rutina de somn pentru bebeluși</h3>
+            <p>Un somn odihnitor este esențial pentru creșterea sănătoasă. Descoperă cum să creezi o rutină de somn potrivită vârstei bebelușului tău.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="age-content" id="age-1-3">
+      <div class="cards-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">🗣️</div>
+          <div class="article-body">
+            <div class="article-cat">1–3 ani · Limbaj</div>
+            <h3>Dezvoltarea limbajului la copilul mic</h3>
+            <p>Cum îți ajuți copilul să vorbească mai bine — cărți, conversații, cântece și jocuri care accelerează dezvoltarea limbajului între 1 și 3 ani.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">🚽</div>
+          <div class="article-body">
+            <div class="article-cat">1–3 ani · Autonomie</div>
+            <h3>Toaleta independentă — cum și când</h3>
+            <p>Renunțarea la scutece este un pas important. Sfaturi practice pentru a face tranziția fără stres, urmând ritmul natural al copilului.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">😤</div>
+          <div class="article-body">
+            <div class="article-cat">1–3 ani · Comportament</div>
+            <h3>Cum gestionezi crizele de furie</h3>
+            <p>„Teribilii doi" vin cu tantrumuri intense. Înțelege cauzele și aplică strategii eficiente pentru a naviga această perioadă cu calm și empatie.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="age-content" id="age-3-6">
+      <div class="cards-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">🎒</div>
+          <div class="article-body">
+            <div class="article-cat">3–6 ani · Grădiniță</div>
+            <h3>Pregătirea pentru grădiniță</h3>
+            <p>Primele zile de grădiniță pot fi emoționante și pentru copil, și pentru părinți. Cum îți pregătești micuțul pentru această etapă importantă.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #B8DEFF, #7EC8E3);">🤝</div>
+          <div class="article-body">
+            <div class="article-cat">3–6 ani · Social</div>
+            <h3>Cum își face prieteni copilul tău</h3>
+            <p>Abilitățile sociale se formează timpuriu. Descoperă cum îl ajuți pe cel mic să interacționeze, să împartă și să rezolve conflicte cu alți copii.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFE5B4, #F5C842);">✏️</div>
+          <div class="article-body">
+            <div class="article-cat">3–6 ani · Pregătire școlară</div>
+            <h3>Primele litere și cifre — joacă, nu presiune</h3>
+            <p>Introducerea scrisului și număratului trebuie să fie o aventură plăcută. Metode prietenoase și jocuri care pregătesc copilul pentru școală fără stres.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="age-content" id="age-6-10">
+      <div class="cards-grid">
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #E8D5FF, #C9A7FF);">📚</div>
+          <div class="article-body">
+            <div class="article-cat">6–10 ani · Școală</div>
+            <h3>Cum îl ajuți pe copil la teme</h3>
+            <p>Temele pot fi o sursă de conflict sau o oportunitate de colaborare. Strategii practice pentru a crea o rutină eficientă de studiu acasă.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #C8F5C8, #88D8A4);">📱</div>
+          <div class="article-body">
+            <div class="article-cat">6–10 ani · Tehnologie</div>
+            <h3>Ecranele și copiii — echilibru sănătos</h3>
+            <p>Tablete, telefoane, televizor — cum stabilești limite sănătoase fără conflicte, și cum transformi tehnologia într-un instrument de învățare.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-thumb" style="background: linear-gradient(135deg, #FFD6E0, #FFACC7);">🏃</div>
+          <div class="article-body">
+            <div class="article-cat">6–10 ani · Activitate fizică</div>
+            <h3>Sport și mișcare — de ce contează</h3>
+            <p>Activitatea fizică regulată susține nu doar sănătatea fizică, ci și concentrarea, stima de sine și bunăstarea emoțională a copilului școlar.</p>
+            <a href="#" class="article-link">Citește mai mult →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" style="margin: 80px 0 0;" />
+
+    <!-- SFATURI DE EDUCATIE -->
+    <div class="tips-section">
+      <div class="section-label">Educație</div>
+      <h2 class="section-title">Sfaturi de educație</h2>
+      <p class="section-sub">Principii fundamentale care te ajută să crești un copil echilibrat, încrezător și fericit.</p>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <span class="tip-icon">🎯</span>
+          <h3>Limite clare cu dragoste</h3>
+          <p>Copiii au nevoie de reguli pentru a se simți în siguranță. Limitele stabilite cu calm și consecvență — fără țipete sau pedepse umilitoare — creează un mediu în care copilul înflorește. Explică întotdeauna motivul din spatele regulii, pe înțelesul lui.</p>
+        </div>
+        <div class="tip-card" style="border-left-color: var(--sky);">
+          <span class="tip-icon">👂</span>
+          <h3>Ascultarea activă</h3>
+          <p>Când copilul simte că este ascultat și înțeles, se deschide mai ușor și colaborează mai bine. Coboară la nivelul lui, menține contactul vizual și validează emoțiile — chiar și când nu ești de acord cu comportamentul.</p>
+        </div>
+        <div class="tip-card" style="border-left-color: var(--green);">
+          <span class="tip-icon">🌱</span>
+          <h3>Disciplina pozitivă</h3>
+          <p>Concentrează-te pe comportamentele bune și recompensează-le, în loc să te focusezi pe greșeli. Lauda specifică — „Bravo că ai împărțit jucăria!" — este mult mai eficientă decât o laudă generică și construiește comportamente sănătoase pe termen lung.</p>
+        </div>
+        <div class="tip-card" style="border-left-color: #E91E63;">
+          <span class="tip-icon">🔄</span>
+          <h3>Consecvența — cheia succesului</h3>
+          <p>Copiii testează limitele pentru a înțelege lumea. Dacă regulile se schimbă în funcție de starea părintelui, copilul devine anxios și confuz. Consecvența nu înseamnă rigiditate — înseamnă predictibilitate și siguranță emoțională.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- DEZVOLTARE EMOTIONALA -->
+    <div class="emotional-section">
+      <div class="section-label">Emoții</div>
+      <h2 class="section-title">Dezvoltare emoțională</h2>
+      <p class="section-sub">Inteligența emoțională se construiește de timpuriu. Ajută-ți copilul să-și înțeleagă și să-și gestioneze emoțiile.</p>
+      <div class="emotional-grid">
+        <div class="emotion-card">
+          <span class="emotion-icon">😊</span>
+          <h3>Recunoașterea emoțiilor</h3>
+          <p>Învață-l pe copil să numească ceea ce simte — bucurie, tristețe, furie, frică. Un copil care știe să pună cuvinte pe emoții le gestionează mult mai ușor.</p>
+        </div>
+        <div class="emotion-card">
+          <span class="emotion-icon">🤗</span>
+          <h3>Empatia față de ceilalți</h3>
+          <p>Empatia se dezvoltă prin exemplul părinților și prin conversații despre sentimentele celorlalți. Cărțile și jocurile de rol sunt instrumente excelente.</p>
+        </div>
+        <div class="emotion-card">
+          <span class="emotion-icon">🧘</span>
+          <h3>Autoreglarea emoțională</h3>
+          <p>Tehnici simple de calmare — respirația profundă, numărul până la 10, o pauză — îl ajută pe copil să facă față momentelor dificile fără să explodeze.</p>
+        </div>
+        <div class="emotion-card">
+          <span class="emotion-icon">💪</span>
+          <h3>Reziliența și stima de sine</h3>
+          <p>Un copil cu stimă de sine sănătoasă face față mai bine eșecurilor. Încurajează efortul, nu doar rezultatul, și lasă-l să se confrunte cu obstacole mici.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" />
+
+    <!-- JOC SI INVATARE -->
+    <div class="play-section">
+      <div class="section-label">Joc & Învățare</div>
+      <h2 class="section-title">Joc și învățare</h2>
+      <p class="section-sub">Jocul este limbajul copilăriei — prin joc, copiii înțeleg lumea, exersează abilități și se dezvoltă holistic.</p>
+      <div class="play-grid">
+        <div class="play-card green">
+          <span class="play-number">01</span>
+          <span class="play-icon">🌿</span>
+          <h3>Jocul în natură</h3>
+          <p>Explorarea în aer liber stimulează curiozitatea, coordonarea motorie și imaginația. Chiar și o oră pe zi afară face o diferență enormă în dezvoltarea copilului.</p>
+        </div>
+        <div class="play-card blue">
+          <span class="play-number">02</span>
+          <span class="play-icon">🎨</span>
+          <h3>Arta și creativitatea</h3>
+          <p>Desenul, pictura, modelatul și colajul dezvoltă motricitatea fină, autoexprimarea și gândirea creativă. Nu există „greșit" în arta copiilor.</p>
+        </div>
+        <div class="play-card sun">
+          <span class="play-number">03</span>
+          <span class="play-icon">📖</span>
+          <h3>Cititul împreună</h3>
+          <p>Cititul cu voce tare, chiar și după ce copilul știe să citească singur, consolidează vocabularul, concentrarea și legătura emoțională cu părintele.</p>
+        </div>
+        <div class="play-card pink">
+          <span class="play-number">04</span>
+          <span class="play-icon">🧩</span>
+          <h3>Jocuri de logică și puzzle</h3>
+          <p>Puzzle-urile, jocurile de construcție și jocurile de strategie dezvoltă gândirea logică, răbdarea și capacitatea de rezolvare a problemelor.</p>
+        </div>
+        <div class="play-card purple">
+          <span class="play-number">05</span>
+          <span class="play-icon">🎭</span>
+          <h3>Jocul de rol și imaginativ</h3>
+          <p>„De-a doctorul", „de-a bucătarul" — prin jocul simbolic, copilul procesează experiențele, dezvoltă empatia și exersează roluri sociale importante.</p>
+        </div>
+        <div class="play-card teal">
+          <span class="play-number">06</span>
+          <span class="play-icon">🎵</span>
+          <h3>Muzica și mișcarea</h3>
+          <p>Cântatul, dansul și ritmul stimulează ambele emisfere cerebrale, îmbunătățesc memoria și coordonarea, și sunt o sursă inepuizabilă de bucurie.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <div>
+        <h2>Discută cu alți părinți<br><em>în comunitatea noastră</em></h2>
+        <p>Mii de părinți români împărtășesc experiențe și sfaturi în forumul CopilulMeu.ro.</p>
+      </div>
+      <a href="forum.html" class="btn-primary">Intră în forum →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <span>© 2026 CopilulMeu.ro — Toate drepturile rezervate</span>
+      <span>Făcut cu ❤️ pentru părinții din România</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.age-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.age-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('age-' + btn.dataset.age).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

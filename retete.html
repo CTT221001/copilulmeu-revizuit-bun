@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rețete Culinare — CopilulMeu.ro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sun: #F5A623;
+      --sky: #4A90D9;
+      --cream: #FFF8F0;
+      --peach: #FFE8CC;
+      --deep-blue: #1A3A5C;
+      --text: #2C2C2C;
+      --muted: #7A7A7A;
+      --white: #ffffff;
+      --orange: #E65100;
+      --light-orange: #FFF3E0;
+      --radius: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,248,240,0.97); backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(245,166,35,0.2);
+    }
+    .nav-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; border-bottom: 1px solid rgba(245,166,35,0.1);
+    }
+    .nav-bottom {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 32px; gap: 0; list-style: none;
+    }
+    .nav-bottom li a {
+      display: block; font-size: 0.8rem; font-weight: 500; color: var(--deep-blue);
+      text-decoration: none; padding: 10px 14px; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-bottom li a:hover { color: var(--sun); border-bottom-color: var(--sun); }
+    .nav-bottom li a.active { color: var(--sun); border-bottom-color: var(--sun); font-weight: 600; }
+    .nav-cta {
+      background: var(--sun) !important; color: var(--white) !important;
+      border-radius: 50px !important; padding: 8px 20px !important;
+      font-weight: 600 !important; border-bottom: none !important; margin-left: 8px;
+    }
+
+    /* HERO */
+    .page-hero {
+      min-height: 400px;
+      background: linear-gradient(135deg, #BF360C 0%, #E64A19 50%, #F57C00 100%);
+      display: flex; align-items: center;
+      padding: 160px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -60px;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero::after {
+      content: '🍽️';
+      position: absolute; bottom: 20px; right: 80px;
+      font-size: 9rem; opacity: 0.07;
+    }
+    .hero-inner { position: relative; z-index: 2; }
+    .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: #FFE082; }
+    .page-hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+    .page-hero h1 em { font-style: italic; font-weight: 300; color: #FFE082; }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.7); font-weight: 300; max-width: 520px; line-height: 1.7; }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 60px; }
+    .section-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); margin-bottom: 12px; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 2.8vw, 2.4rem); font-weight: 800; color: var(--deep-blue); letter-spacing: -1px; line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 48px; max-width: 580px; }
+    .section-divider { border: none; border-top: 1px solid rgba(26,58,92,0.08); margin: 80px 0; }
+
+    /* CATEGORY TABS */
+    .cat-tabs { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+    .cat-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 50px;
+      border: 2px solid rgba(26,58,92,0.12);
+      background: var(--white); color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .cat-btn:hover { border-color: var(--sun); color: var(--sun); }
+    .cat-btn.active { background: var(--sun); border-color: var(--sun); color: var(--white); box-shadow: 0 6px 20px rgba(245,166,35,0.3); }
+    .cat-content { display: none; animation: fadeUp 0.4s ease both; }
+    .cat-content.active { display: block; }
+
+    /* RECIPE CARDS */
+    .recipes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .recipe-card {
+      background: var(--white); border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .recipe-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,58,92,0.1); }
+    .recipe-thumb {
+      height: 140px; display: flex; align-items: center; justify-content: center; font-size: 3.2rem;
+      position: relative;
+    }
+    .recipe-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255,255,255,0.9); border-radius: 50px;
+      padding: 4px 10px; font-size: 0.68rem; font-weight: 700;
+      color: var(--deep-blue); display: flex; align-items: center; gap: 4px;
+    }
+    .recipe-body { padding: 20px; }
+    .recipe-cat { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--orange); margin-bottom: 6px; }
+    .recipe-body h3 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--deep-blue); margin-bottom: 8px; line-height: 1.3; font-weight: 600; }
+    .recipe-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .recipe-info { display: flex; gap: 16px; margin-top: 14px; }
+    .recipe-info span { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+    .recipe-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 0.82rem; font-weight: 600; color: var(--sun); text-decoration: none; transition: gap 0.2s; }
+    .recipe-link:hover { gap: 10px; }
+
+    /* FEATURED RECIPE */
+    .featured-recipe {
+      background: var(--white); border-radius: 28px; overflow: hidden;
+      border: 1px solid rgba(26,58,92,0.07); margin-bottom: 40px;
+      display: grid; grid-template-columns: 1fr 1.4fr;
+    }
+    .featured-image {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; min-height: 280px;
+    }
+    .featured-body { padding: 44px 40px; }
+    .featured-tag { display: inline-block; background: var(--peach); color: var(--sun); font-size: 0.72rem; font-weight: 700; padding: 6px 14px; border-radius: 50px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+    .featured-body h3 { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--deep-blue); margin-bottom: 12px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; }
+    .featured-body p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 20px; }
+    .featured-info { display: flex; gap: 24px; margin-bottom: 24px; }
+    .featured-info span { font-size: 0.82rem; color: var(--deep-blue); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+    .btn-recipe { display: inline-flex; align-items: center; gap: 8px; background: var(--sun); color: var(--white); padding: 12px 28px; border-radius: 50px; font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-recipe:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,166,35,0.35); }
+
+    /* TIPS BOX */
+    .tips-box {
+      background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+      border-radius: 20px; padding: 32px 36px; margin-top: 40px;
+      border-left: 4px solid var(--sun);
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .tips-box-icon { font-size: 2rem; flex-shrink: 0; }
+    .tips-box h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--deep-blue); margin-bottom: 8px; font-weight: 600; }
+    .tips-box p { font-size: 0.88rem; color: var(--text); line-height: 1.7; font-weight: 300; }
+
+    /* CTA */
+    .cta-banner {
+      background: linear-gradient(135deg, #BF360C, #F57C00);
+      border-radius: 28px; padding: 60px;
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 40px; margin-top: 80px;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::after { content: '👨‍🍳'; position: absolute; right: 180px; top: 50%; transform: translateY(-50%); font-size: 6rem; opacity: 0.08; }
+    .cta-banner h2 { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.2; margin-bottom: 10px; }
+    .cta-banner h2 em { font-style: italic; color: #FFE082; font-weight: 300; }
+    .cta-banner p { color: rgba(255,255,255,0.65); font-size: 0.95rem; font-weight: 300; }
+    .btn-primary { background: var(--white); color: var(--orange); padding: 16px 36px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; white-space: nowrap; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.15); }
+
+    /* FOOTER */
+    footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); padding: 40px 60px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1024px) {
+      .page-hero { padding: 140px 30px 60px; }
+      .main-wrap { padding: 60px 30px; }
+      .recipes-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-recipe { grid-template-columns: 1fr; }
+      .featured-image { min-height: 180px; }
+      .cta-banner { grid-template-columns: 1fr; padding: 40px; }
+      footer { padding: 30px; }
+    }
+    @media (max-width: 640px) {
+      .recipes-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-top">
+      <a href="index.html" style="display:inline-block;text-decoration:none;line-height:1;">
+        <span style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;color:#CC2200;letter-spacing:-1px;line-height:1.1;display:block;">Copilul</span>
+        <span style="font-family:Georgia,serif;font-size:1.2rem;font-weight:700;font-style:italic;color:#F5C200;letter-spacing:2px;line-height:1;display:block;text-align:right;margin-top:-2px;">Meu</span>
+      </a>
+      <a href="forum.html" class="nav-cta" style="text-decoration:none;font-size:0.85rem;">Forum</a>
+    </div>
+    <ul class="nav-bottom">
+      <li><a href="index.html">Acasă</a></li>
+      <li><a href="prenatal.html">Perioada prenatală și nașterea</a></li>
+      <li><a href="crestere.html">Creșterea și educarea copilului</a></li>
+      <li><a href="intelepciune.html">Înțelepciunea mămicii</a></li>
+      <li><a href="retete.html" class="active">Rețete culinare</a></li>
+      <li><a href="jocuri.html">Jocuri online</a></li>
+      <li><a href="foto.html">Foto Povești</a></li>
+      <li><a href="teste.html">Teste și sondaje</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="index.html">Acasă</a> › Rețete culinare</div>
+      <h1>Rețete culinare<br><em>pentru toată familia</em></h1>
+      <p>De la primele piureuri ale bebelușului până la mesele în familie — rețete sănătoase, simple și delicioase pentru fiecare etapă.</p>
+    </div>
+  </section>
+
+  <div class="main-wrap">
+
+    <!-- TABS CATEGORII -->
+    <div class="section-label">Categorii</div>
+    <h2 class="section-title">Alege categoria ta</h2>
+    <p class="section-sub">Rețete gândite special pentru nevoile nutriționale ale fiecărei vârste.</p>
+
+    <div class="cat-tabs">
+      <button class="cat-btn active" data-cat="bebelusi">🍼 Bebeluși (diversificare)</button>
+      <button class="cat-btn" data-cat="copii-mici">🧒 Copii mici (1–3 ani)</button>
+      <button class="cat-btn" data-cat="familie">👨‍👩‍👧 Întreaga familie</button>
+      <button class="cat-btn" data-cat="smoothie">🥤 Smoothie-uri & sucuri</button>
+      <button class="cat-btn" data-cat="gustari">🍎 Gustări sănătoase</button>
+    </div>
+
+    <!-- BEBELUSI -->
+    <div class="cat-content active" id="cat-bebelusi">
+      <div class="featured-recipe">
+        <div class="featured-image" style="background: linear-gradient(135deg, #FFF9C4, #FFE082);">🥕</div>
+        <div class="featured-body">
+          <span class="featured-tag">⭐ Rețeta săptămânii</span>
+          <h3>Piure de morcov și cartof dulce</h3>
+          <p>Prima rețetă perfectă pentru diversificare — dulce natural, cremoasă și bogată în beta-caroten și vitamina A. Ideală pentru bebeluși de 6+ luni, fără sare și fără zahăr adăugat.</p>
+          <div class="featured-info">
+            <span>⏱ 20 min</span>
+            <span>👶 6+ luni</span>
+            <span>🟢 Ușor</span>
+          </div>
+          <a href="#" class="btn-recipe">Vezi rețeta completă →</a>
+        </div>
+      </div>
+      <div class="recipes-grid">
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #E8F5E9, #C8F5C8);">
+            🥦
+            <span class="recipe-badge">⏱ 15 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Legume · 6+ luni</div>
+            <h3>Piure de broccoli și dovlecel</h3>
+            <p>O combinație ușor de digerat, bogată în fier și vitamina C. Culoarea verde intensă îl va fascina pe bebeluș!</p>
+            <div class="recipe-info">
+              <span>👶 6+ luni</span>
+              <span>🟢 Ușor</span>
+            </div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FFF3E0, #FFE0B2);">
+            🍗
+            <span class="recipe-badge">⏱ 30 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Proteine · 7+ luni</div>
+            <h3>Piure de pui cu dovleac</h3>
+            <p>Prima introducere a proteinelor animale — pui fiert delicat, mixat cu dovleac dulce pentru o textură catifelată.</p>
+            <div class="recipe-info">
+              <span>👶 7+ luni</span>
+              <span>🟡 Mediu</span>
+            </div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FCE4EC, #FFD6E0);">
+            🍓
+            <span class="recipe-badge">⏱ 10 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Fructe · 6+ luni</div>
+            <h3>Piure de măr și pară cu scorțișoară</h3>
+            <p>Dulce natural și aromat, perfect ca desert sau gustare. Scorțișoara în cantitate mică ajută digestia bebelușului.</p>
+            <div class="recipe-info">
+              <span>👶 6+ luni</span>
+              <span>🟢 Ușor</span>
+            </div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+      </div>
+      <div class="tips-box">
+        <span class="tips-box-icon">💡</span>
+        <div>
+          <h4>Sfat pentru diversificare</h4>
+          <p>Introduce câte un singur aliment nou la 3–4 zile pentru a identifica eventualele alergii. Începe cu legume și fructe cu gust blând, fără sare, zahăr sau miere. Consistența trebuie să fie foarte fină la început, devenind treptat mai groasă pe măsură ce bebelușul se obișnuiește.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COPII MICI -->
+    <div class="cat-content" id="cat-copii-mici">
+      <div class="featured-recipe">
+        <div class="featured-image" style="background: linear-gradient(135deg, #E8F5E9, #A5D6A7);">🍝</div>
+        <div class="featured-body">
+          <span class="featured-tag">⭐ Rețeta săptămânii</span>
+          <h3>Paste integrale cu sos de roșii și legume ascunse</h3>
+          <p>Trucul mamelor inteligente — legumele „ascunse" în sosul de roșii fac pasta mai nutritivă fără ca cel mic să observe. Perfectă pentru micuții mofturoși care refuză legumele.</p>
+          <div class="featured-info">
+            <span>⏱ 25 min</span>
+            <span>🧒 1–3 ani</span>
+            <span>🟢 Ușor</span>
+          </div>
+          <a href="#" class="btn-recipe">Vezi rețeta completă →</a>
+        </div>
+      </div>
+      <div class="recipes-grid">
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FFF9C4, #FFF176);">
+            🍳
+            <span class="recipe-badge">⏱ 10 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Mic dejun · 1+ ani</div>
+            <h3>Omletă colorată cu legume</h3>
+            <p>Ouă bătute cu ardei colorat, morcov ras și puțin cașcaval — un mic dejun rapid, proteic și atrăgător vizual pentru cei mici.</p>
+            <div class="recipe-info"><span>🧒 1+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #F3E5F5, #E1BEE7);">
+            🫐
+            <span class="recipe-badge">⏱ 5 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Desert · 1+ ani</div>
+            <h3>Iaurt cu fructe de pădure și ovăz</h3>
+            <p>Un desert rapid, fără zahăr adăugat — iaurt natural, fructe proaspete sau congelate și câteva linguri de fulgi de ovăz.</p>
+            <div class="recipe-info"><span>🧒 1+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #E8F5E9, #C8F5C8);">
+            🥕
+            <span class="recipe-badge">⏱ 35 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Prânz · 1+ ani</div>
+            <h3>Supă cremă de morcovi cu ghimbir</h3>
+            <p>Caldă, dulce și ușor de mâncat — această supă cremă este perfectă pentru zilele friguroase și pentru copiii care refuză legumele întregi.</p>
+            <div class="recipe-info"><span>🧒 1+ ani</span><span>🟡 Mediu</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAMILIE -->
+    <div class="cat-content" id="cat-familie">
+      <div class="featured-recipe">
+        <div class="featured-image" style="background: linear-gradient(135deg, #FFF3E0, #FFCCBC);">🍲</div>
+        <div class="featured-body">
+          <span class="featured-tag">⭐ Rețeta săptămânii</span>
+          <h3>Tocăniță de pui cu legume și orez</h3>
+          <p>O rețetă completă, echilibrată și adorată de toată familia — pui suculent, legume colorate și orez pufos. Se prepară într-o singură oală, economisind timp prețios.</p>
+          <div class="featured-info">
+            <span>⏱ 45 min</span>
+            <span>👨‍👩‍👧 Toată familia</span>
+            <span>🟡 Mediu</span>
+          </div>
+          <a href="#" class="btn-recipe">Vezi rețeta completă →</a>
+        </div>
+      </div>
+      <div class="recipes-grid">
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #E3F2FD, #B8DEFF);">
+            🐟
+            <span class="recipe-badge">⏱ 30 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Cină · Toată familia</div>
+            <h3>Somon la cuptor cu lămâie și ierburi</h3>
+            <p>Rapid, sănătos și delicios — somonul este bogat în Omega-3, esențial pentru dezvoltarea creierului copilului și sănătatea întregii familii.</p>
+            <div class="recipe-info"><span>👨‍👩‍👧 Familie</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FCE4EC, #FFD6E0);">
+            🍕
+            <span class="recipe-badge">⏱ 50 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Weekend · Toată familia</div>
+            <h3>Pizza de casă cu aluat wholemeal</h3>
+            <p>Activitatea perfectă de weekend — frământat aluatul împreună, ales toppingurile preferate și copt cu drag. Sănătoasă și distractivă în același timp.</p>
+            <div class="recipe-info"><span>👨‍👩‍👧 Familie</span><span>🟡 Mediu</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #F3E5F5, #E8D5FF);">
+            🥗
+            <span class="recipe-badge">⏱ 15 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Salată · Toată familia</div>
+            <h3>Salată de quinoa cu legume coapte</h3>
+            <p>Quinoa — proteina vegetală completă — combinată cu legume coapte colorat. O masă ușoară și nutritivă, gata în 15 minute.</p>
+            <div class="recipe-info"><span>👨‍👩‍👧 Familie</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMOOTHIE -->
+    <div class="cat-content" id="cat-smoothie">
+      <div class="featured-recipe">
+        <div class="featured-image" style="background: linear-gradient(135deg, #E8F5E9, #A5D6A7);">🥤</div>
+        <div class="featured-body">
+          <span class="featured-tag">⭐ Rețeta săptămânii</span>
+          <h3>Smoothie verde de spanac, banana și mango</h3>
+          <p>Spanacul „dispare" în spatele dulceții de banană și mango — un truc genial pentru a introduce verdețurile în dieta copilului fără proteste. Bogat în fier, magneziu și vitamina C.</p>
+          <div class="featured-info">
+            <span>⏱ 5 min</span>
+            <span>🌿 Toate vârstele</span>
+            <span>🟢 Ușor</span>
+          </div>
+          <a href="#" class="btn-recipe">Vezi rețeta completă →</a>
+        </div>
+      </div>
+      <div class="recipes-grid">
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FCE4EC, #FFD6E0);">
+            🍓
+            <span class="recipe-badge">⏱ 5 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Smoothie · 1+ ani</div>
+            <h3>Smoothie de căpșuni și iaurt</h3>
+            <p>Simplu, roz și adorat de copii — căpșuni proaspete sau congelate, iaurt natural și un strop de miere pentru 2+ ani.</p>
+            <div class="recipe-info"><span>🍓 1+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FFF9C4, #FFE082);">
+            🍋
+            <span class="recipe-badge">⏱ 5 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Limonadă · Toată familia</div>
+            <h3>Limonadă naturală cu mentă și ghimbir</h3>
+            <p>Răcoritoare și sănătoasă — fără zahăr adăugat, îndulcită natural cu miere (pentru 2+ ani) sau sirop de agave.</p>
+            <div class="recipe-info"><span>🍋 2+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #E3F2FD, #B8DEFF);">
+            🫐
+            <span class="recipe-badge">⏱ 5 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Smoothie bowl · 2+ ani</div>
+            <h3>Smoothie bowl de afine și cocos</h3>
+            <p>O experiență vizuală și gustativă — afine, lapte de cocos, banană congelată, topped cu granola și fructe proaspete.</p>
+            <div class="recipe-info"><span>🫐 2+ ani</span><span>🟡 Mediu</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUSTARI -->
+    <div class="cat-content" id="cat-gustari">
+      <div class="featured-recipe">
+        <div class="featured-image" style="background: linear-gradient(135deg, #FFF3E0, #FFE0B2);">🧁</div>
+        <div class="featured-body">
+          <span class="featured-tag">⭐ Rețeta săptămânii</span>
+          <h3>Muffins cu banană și ovăz fără zahăr</h3>
+          <p>Dulci natural datorită bananei coapte, pufoși și nutritivi — perfecte ca gustare la școală sau acasă. Fără zahăr adăugat, fără făină albă. Copiii le cer mereu!</p>
+          <div class="featured-info">
+            <span>⏱ 35 min</span>
+            <span>🍌 1+ ani</span>
+            <span>🟢 Ușor</span>
+          </div>
+          <a href="#" class="btn-recipe">Vezi rețeta completă →</a>
+        </div>
+      </div>
+      <div class="recipes-grid">
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #E8F5E9, #C8F5C8);">
+            🥒
+            <span class="recipe-badge">⏱ 5 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Gustare · Toate vârstele</div>
+            <h3>Legume cu humus de casă</h3>
+            <p>Morcovi, castraveți și ardei colorat servite cu humus cremos — o gustare crocantă, sățioasă și bogată în fibre și proteine vegetale.</p>
+            <div class="recipe-info"><span>🥕 1+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FFF9C4, #FFF176);">
+            🍌
+            <span class="recipe-badge">⏱ 15 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Desert · 1+ ani</div>
+            <h3>Înghețată de banană cu 2 ingrediente</h3>
+            <p>Banane congelate mixate — asta e tot! Cremoasă ca înghețata, fără zahăr, fără lactate. Poți adăuga cacao, fructe de pădure sau unt de arahide.</p>
+            <div class="recipe-info"><span>🍌 1+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+        <div class="recipe-card">
+          <div class="recipe-thumb" style="background: linear-gradient(135deg, #FCE4EC, #FFD6E0);">
+            🍎
+            <span class="recipe-badge">⏱ 20 min</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-cat">Gustare coaptă · 1+ ani</div>
+            <h3>Chips de mere cu scorțișoară la cuptor</h3>
+            <p>Crocante, dulci și parfumate — mere feliate subțire, coapte la temperatură joasă până devin crocante. O alternativă sănătoasă la chips-urile clasice.</p>
+            <div class="recipe-info"><span>🍎 1+ ani</span><span>🟢 Ușor</span></div>
+            <a href="#" class="recipe-link">Vezi rețeta →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <div>
+        <h2>Ai o rețetă<br><em>de împărtășit?</em></h2>
+        <p>Postează rețeta ta preferată în forum și inspiră alte mămici din comunitatea noastră!</p>
+      </div>
+      <a href="forum.html" class="btn-primary">Postează rețeta →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <span>© 2026 CopilulMeu.ro — Toate drepturile rezervate</span>
+      <span>Făcut cu ❤️ pentru părinții din România</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.cat-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('cat-' + btn.dataset.cat).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
